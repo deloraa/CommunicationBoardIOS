@@ -442,6 +442,8 @@
 				DEVELOPMENT_TEAM = 37PFR78NWS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CommunicationBoard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CommunicationBoard;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We would like to access your camera.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -470,6 +472,8 @@
 				DEVELOPMENT_TEAM = 37PFR78NWS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CommunicationBoard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CommunicationBoard;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We would like to access your camera.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

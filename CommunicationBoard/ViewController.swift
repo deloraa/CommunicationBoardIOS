@@ -68,6 +68,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var Icon31: UIImageView!
     @IBOutlet weak var Icon32: UIImageView!
     
+    var settingsOpen = false;
     var iconImageViews = [(String,UIImageView)]()
     var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOff":"Turn sound on or off"]
 
@@ -86,7 +87,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var blinkDelay = 1.200;
     var timeactivateleftright = 0.09;
     var timeactivateblink = 0.36;
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //settingsOpen = true
+        print("settings open")
+    }
+
     func resetImages(){
         
         for i in 0 ..< leftImagesGlobal.count {
@@ -238,7 +243,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var lookDirection = "";
     var startLookTime = Double.greatestFiniteMagnitude;
     func readMyFace(anchor: ARFaceAnchor) {
-  
+        if settingsOpen{
+            return;
+        }
 
         let currentTime = Date().timeIntervalSince1970;
         // function that takes an ARFaceAnchor in as a parameter

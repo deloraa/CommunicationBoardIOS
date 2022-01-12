@@ -11,9 +11,14 @@ import AVFoundation
 
 class howToViewController: UIViewController {
 
+    @IBOutlet weak var VideoView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare ran")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -21,15 +26,14 @@ class howToViewController: UIViewController {
         let player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: "CommBoard", ofType: "mp4")!))
         let playerController = AVPlayerViewController()
         playerController.player = player
-        playerController.view.frame = self.view.bounds
-        playerController.videoGravity = .resizeAspect
+        playerController.view.frame = self.VideoView.bounds
+        //playerController.videoGravity = .resizeAspect
         self.addChild(playerController)
-        self.view.addSubview(playerController.view)
+        self.VideoView.addSubview(playerController.view)
         playerController.didMove(toParent: self)
         
     }
         
-
  
     /*
     // MARK: - Navigation

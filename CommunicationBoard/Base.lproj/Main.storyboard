@@ -47,12 +47,18 @@
                                         <color key="tintColor" red="0.047058823530000002" green="0.043137254899999998" blue="0.043137254899999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Settings"/>
+                                        <connections>
+                                            <segue destination="hiT-eo-yOS" kind="presentation" id="C7k-QU-0RP"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYo-OQ-1S2">
                                         <rect key="frame" x="181.33333333333331" y="0.0" width="77.666666666666686" height="23.666666666666668"/>
                                         <color key="tintColor" red="0.047058823530000002" green="0.043137254899999998" blue="0.043137254899999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="About"/>
+                                        <connections>
+                                            <segue destination="ZYk-hG-RjK" kind="presentation" id="PpX-md-Jtn"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -478,13 +484,40 @@
                     <view key="view" contentMode="scaleToFill" id="hna-TL-ny3">
                         <rect key="frame" x="0.0" y="0.0" width="926" height="428"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpx-2P-48s">
+                                <rect key="frame" x="803" y="20" width="59" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gpx-2P-48s" secondAttribute="height" multiplier="59:31" id="5GJ-Sg-ndZ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99B-lZ-aSH">
+                                <rect key="frame" x="127.66666666666669" y="25.333333333333343" width="670.66666666666652" height="377.33333333333326"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="99B-lZ-aSH" secondAttribute="height" multiplier="1920:1080" id="B6o-wQ-3Qx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="jTj-Jy-6Bi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="99B-lZ-aSH" firstAttribute="width" secondItem="jTj-Jy-6Bi" secondAttribute="width" multiplier="0.8" id="LNQ-H7-QZ9"/>
+                            <constraint firstItem="gpx-2P-48s" firstAttribute="trailing" secondItem="hna-TL-ny3" secondAttribute="trailingMargin" id="iMz-iV-T3U"/>
+                            <constraint firstItem="gpx-2P-48s" firstAttribute="top" secondItem="jTj-Jy-6Bi" secondAttribute="top" constant="20" id="nIZ-uw-EPc"/>
+                            <constraint firstItem="99B-lZ-aSH" firstAttribute="centerY" secondItem="hna-TL-ny3" secondAttribute="centerY" id="sZZ-UB-UEi"/>
+                            <constraint firstItem="99B-lZ-aSH" firstAttribute="centerX" secondItem="hna-TL-ny3" secondAttribute="centerX" id="sfg-Za-Coo"/>
+                            <constraint firstItem="gpx-2P-48s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jTj-Jy-6Bi" secondAttribute="leading" symbolic="YES" id="zd8-7s-x1b"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="VideoView" destination="99B-lZ-aSH" id="gEi-0E-ze1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khp-oj-iNR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="706" y="-573"/>
+            <point key="canvasLocation" x="705.61555075593958" y="-573.36448598130835"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hth-tU-13t">
@@ -493,8 +526,24 @@
                     <view key="view" contentMode="scaleToFill" id="sgE-LW-KOV">
                         <rect key="frame" x="0.0" y="0.0" width="926" height="428"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTD-s1-yVm">
+                                <rect key="frame" x="803" y="20" width="59" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eTD-s1-yVm" secondAttribute="height" multiplier="59:31" id="AAl-Mj-xRc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="pDB-N1-q2f"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eTD-s1-yVm" firstAttribute="width" secondItem="eTD-s1-yVm" secondAttribute="height" multiplier="59:31" id="XBd-Ek-VcX"/>
+                            <constraint firstItem="eTD-s1-yVm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pDB-N1-q2f" secondAttribute="leading" symbolic="YES" id="hxf-KX-Aai"/>
+                            <constraint firstItem="eTD-s1-yVm" firstAttribute="top" secondItem="sgE-LW-KOV" secondAttribute="top" constant="20" symbolic="YES" id="ksy-UF-GBC"/>
+                            <constraint firstItem="eTD-s1-yVm" firstAttribute="trailing" secondItem="sgE-LW-KOV" secondAttribute="trailingMargin" id="y2A-Yp-vGb"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Ce-hB-oTr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -508,8 +557,25 @@
                     <view key="view" contentMode="scaleToFill" id="WNR-hn-kDN">
                         <rect key="frame" x="0.0" y="0.0" width="926" height="428"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eck-jU-wck">
+                                <rect key="frame" x="803" y="20" width="59" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eck-jU-wck" secondAttribute="height" multiplier="59:31" id="Noj-n6-iTm"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="mTe-2e-kmh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eck-jU-wck" firstAttribute="width" secondItem="eck-jU-wck" secondAttribute="height" multiplier="59:31" id="8Tw-AB-Mb1"/>
+                            <constraint firstItem="eck-jU-wck" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mTe-2e-kmh" secondAttribute="leading" symbolic="YES" id="BZk-qK-CAC"/>
+                            <constraint firstItem="eck-jU-wck" firstAttribute="top" secondItem="WNR-hn-kDN" secondAttribute="top" constant="20" symbolic="YES" id="C2k-BL-yzT"/>
+                            <constraint firstItem="eck-jU-wck" firstAttribute="trailing" secondItem="WNR-hn-kDN" secondAttribute="trailingMargin" id="OyR-Wc-DCV"/>
+                            <constraint firstItem="eck-jU-wck" firstAttribute="width" secondItem="eck-jU-wck" secondAttribute="height" multiplier="59:31" id="WHv-jW-4Op"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9K-a3-W2Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

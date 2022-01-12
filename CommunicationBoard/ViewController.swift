@@ -23,6 +23,12 @@ extension Array {
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
+    @IBOutlet weak var RightIconsView: UIView!
+    @IBOutlet weak var LeftIconsView: UIView!
+    @IBOutlet weak var TopStack: UIStackView!
+    @IBOutlet weak var LeftArrowBackground: UIView!
+    @IBOutlet weak var RightArrowBackground: UIView!
+    
     @IBOutlet weak var backgroundModal: UIView!
     @IBOutlet weak var modalImage: UIImageView!
     @IBOutlet var sceneView: ARSCNView!
@@ -63,7 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var Icon32: UIImageView!
     
     var iconImageViews = [(String,UIImageView)]()
-    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOff":"Turn sound on or off"]
+    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOff":"Turn sound on or off"]
 
     var iconImages = [(name: "1-Afraid", image:UIImage(named: "1-Afraid")),(name: "2-Pain", image:UIImage(named: "2-Pain")),(name: "3-Yes", image:UIImage(named: "3-Yes")),(name: "4-No", image:UIImage(named: "4-No")),(name: "5-Sad", image:UIImage(named: "5-Sad")),(name: "6-Frustrated", image:UIImage(named: "6-Frustrated")),(name: "7-Nurse", image:UIImage(named: "7-Nurse")),(name: "8-Doctor", image:UIImage(named: "8-Doctor")),(name: "9-Tired", image:UIImage(named: "9-Tired")),(name: "10-FeelSick", image:UIImage(named: "10-FeelSick")),(name: "11-Cold_hot", image:UIImage(named: "11-Cold_hot")),(name: "12-ShortofBreath", image:UIImage(named: "12-ShortofBreath")),(name: "13-Angry", image:UIImage(named: "13-Angry")),(name: "14-Dizzy", image:UIImage(named: "14-Dizzy")),(name: "15-Choking", image:UIImage(named: "15-Choking")),(name: "16-Hungry", image:UIImage(named: "16-Hungry")),(name: "17-HowamI", image:UIImage(named: "17-HowamI")),(name: "18-WhatTime", image:UIImage(named: "18-WhatTime")),(name: "19-WhatsHappening", image:UIImage(named: "19-WhatsHappening")),(name: "20-Comeback", image:UIImage(named: "20-Comeback")),(name: "21-Situp", image:UIImage(named: "21-Situp")),(name: "22-LieDown", image:UIImage(named: "22-LieDown")),(name: "23-Home", image:UIImage(named: "23-Home")),(name: "24-TVVideo", image:UIImage(named: "24-TVVideo")),(name: "25-Light", image:UIImage(named: "25-Light")),(name: "26-CallLight", image:UIImage(named: "26-CallLight")),(name: "27-Water", image:UIImage(named: "27-Water")),(name: "28-Glasses", image:UIImage(named: "28-Glasses")),(name: "29-Suction", image:UIImage(named: "29-Suction")),(name: "30-LipsMoistened", image:UIImage(named: "30-LipsMoistened")),(name: "31-Sleep", image:UIImage(named: "31-Sleep")),(name: "32-SoundOff", image:UIImage(named: "32-SoundOff"))]
     
@@ -74,7 +80,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var topText = "Running: Blink either eye to pause"
     
     var widthThreshold = 0.5;
-    var leftRightLookDelay = 0.300;
+    var leftRightLookDelay = 0.500;
     var upperBlinkCutoff = 0.5;
     var lowerBlinkCutoff = 0.5;
     var blinkDelay = 1.200;
@@ -95,7 +101,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         rightImages = rightImagesGlobal;
 
     }
-    
+    static func getConvertedPoint(_ targetView: UIView, baseView: UIView)->CGPoint{
+        var pnt = targetView.frame.origin
+        if nil == targetView.superview{
+            return pnt
+        }
+        var superView = targetView.superview
+        while superView != baseView{
+            pnt = superView!.convert(pnt, to: superView!.superview)
+            if nil == superView!.superview{
+                break
+            }else{
+                superView = superView!.superview
+            }
+        }
+        return superView!.convert(pnt, to: baseView)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -111,6 +132,28 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         rightImagesGlobal = tempIconImagesGlobal.right;
         leftImages = leftImagesGlobal;
         rightImages = rightImagesGlobal;
+
+/*
+        print(self.Icon10.frame.midX)
+        print(self.Icon12.frame.midX)
+        print(self.Icon12.frame.origin)
+        let globalPoint =  self.Icon10.convert(self.Icon10.bounds, to: TopStack)
+        let globalPoint2 = self.Icon12.convert(self.Icon12.bounds, to: TopStack)
+        print(globalPoint)
+        print(globalPoint2)
+        
+        let icon12xvalue = self.Icon12.superview!.superview!.superview!.frame.origin.x - self.Icon27.superview!.superview!.superview!.frame.origin.x
+        let icon27xvalue = self.Icon12.frame.origin.x-self.Icon27.frame.origin.x
+*/
+ /*
+        UIView.animate(withDuration: 2.0, animations: {() -> Void in
+            self.Icon2?.transform = CGAffineTransform(translationX: 179, y: 88 )
+        }, completion: {(_ finished: Bool) -> Void in
+            /*UIView.animate(withDuration: 2.0, animations: {() -> Void in
+                self.Icon12?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            })*/
+        })*/
+
 
     }
     
@@ -195,7 +238,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var lookDirection = "";
     var startLookTime = Double.greatestFiniteMagnitude;
     func readMyFace(anchor: ARFaceAnchor) {
-        
+  
+
         let currentTime = Date().timeIntervalSince1970;
         // function that takes an ARFaceAnchor in as a parameter
         //left look values
@@ -220,21 +264,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         {
             startLookTime = currentTime;
             lookDirection = "LEFT";
-            
+            RightArrowBackground.alpha = 0
             //rightarrowelement.style.backgroundColor = backgroundColorChange(0);
             
         } else if eyeLookOutLeft?.decimalValue ?? 0.0 > 0.5 && eyeLookInRight?.decimalValue ?? 0.0 > 0.5 && lookDirection != "RIGHT" && lookDirection != "RESET"
         {
             startLookTime = currentTime;
             lookDirection = "RIGHT";
-            //leftarrowelement.style.backgroundColor = backgroundColorChange(0);
+            LeftArrowBackground.alpha = 0
         } else if eyeLookOutRight?.decimalValue ?? 0.0 <= 0.5 && eyeLookInLeft?.decimalValue ?? 0.0 <= 0.5 && eyeLookOutLeft?.decimalValue ?? 0.0 <= 0.5 && eyeLookInRight?.decimalValue ?? 0.0 <= 0.5{
             startLookTime = Double.greatestFiniteMagnitude;
             lookDirection = "";
-            //leftarrowelement.style.backgroundColor = "transparent";
-            //rightarrowelement.style.backgroundColor = "transparent";
-            //rightarrowelement.style.backgroundColor = backgroundColorChange(0);
-            //leftarrowelement.style.backgroundColor = backgroundColorChange(0);
+            LeftArrowBackground.alpha = 0
+            RightArrowBackground.alpha = 0
         }
         
         if startLookTime + leftRightLookDelay < currentTime {
@@ -260,67 +302,102 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
                 }else{
                     let imageSplitSize = self.leftImages.count/2;
-                    
-                    for i in 0 ..< imageSplitSize {
-                        self.rightImages[i].imageView.image = self.leftImages[i+imageSplitSize].imageView.image;
-                        self.rightImagesGlobal[i].name = self.leftImages[i+imageSplitSize].name;
-                    }
-                    for i in imageSplitSize ..< self.rightImages.count {
-                        self.rightImages[i].imageView.image = UIImage();
-                    }
-                    
-                    for i in imageSplitSize ..< self.leftImages.count {
-                        self.leftImages[i].imageView.image = UIImage();
-                    }
-                    
-                    
-                    
-                    let initsize = leftImages.count/2;
-                    rightImages = Array(rightImagesGlobal[0 ..< initsize])
-                    leftImages = Array(leftImagesGlobal[0 ..< initsize])
-                    
-                    
+                    let animationDuration = leftRightLookDelay/2
+                    self.TopStack.bringSubviewToFront(self.LeftIconsView)
+                    UIView.animate(withDuration: animationDuration, animations: {() -> Void in
+                        for i in 0 ..< self.rightImages.count {
+                            self.rightImages[i].imageView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+                            
+                        }
+                        
+                    }, completion: {(_ finished: Bool) -> Void in
+                        
+                        for i in 0 ..< self.rightImages.count {
+                            self.rightImages[i].imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            self.rightImages[i].imageView.image = UIImage();
+                            
+                        }
+                        
+                        UIView.animate(withDuration: animationDuration, animations: {() -> Void in
+                            for i in 0 ..< imageSplitSize {
+                                let rightImagePoint =  self.rightImages[i].imageView.convert(self.rightImages[i].imageView.bounds, to: self.TopStack)
+                                let leftImagePoint = self.leftImages[i+imageSplitSize].imageView.convert(self.leftImages[i+imageSplitSize].imageView.bounds, to: self.TopStack)
+                                self.leftImages[i+imageSplitSize].imageView.transform = CGAffineTransform(translationX: rightImagePoint.origin.x-leftImagePoint.origin.x, y: rightImagePoint.origin.y-leftImagePoint.origin.y)
+                            }
+                            
+                            
+                        }, completion: {(_ finished: Bool) -> Void in
+                            for i in 0 ..< imageSplitSize {
+                                self.rightImages[i].imageView.image = self.leftImages[i+imageSplitSize].imageView.image
+                                self.rightImagesGlobal[i].name = self.leftImages[i+imageSplitSize].name;
+                                self.leftImages[i+imageSplitSize].imageView.image = UIImage()
+                                self.leftImages[i+imageSplitSize].imageView.transform = CGAffineTransform(translationX:0,y:0)
+                            }
+                            let initsize = self.leftImages.count/2;
+                            self.rightImages = Array(self.rightImagesGlobal[0 ..< initsize])
+                            self.leftImages = Array(self.leftImagesGlobal[0 ..< initsize])
+                        })
+                    })
                     
                     startLookTime = Double.greatestFiniteMagnitude;
                 }
             }else if lookDirection == "RIGHT" {
-
+                
                 if self.rightImages.count == 1{
-                        self.backgroundModal.alpha = 0.5
+                    self.backgroundModal.alpha = 0.5
+                    self.backgroundModal.layoutIfNeeded()
+                    self.modalImage.isHidden = false
+                    self.modalImage.image = self.rightImages[0].imageView.image
+                    self.modalImage.layoutIfNeeded()
+                    readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "", person:"Martha")
+                    resetImages()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self.backgroundModal.alpha = 0
                         self.backgroundModal.layoutIfNeeded()
-                        self.modalImage.isHidden = false
-                        self.modalImage.image = self.rightImages[0].imageView.image
+                        self.modalImage.isHidden = true
+                        self.modalImage.image = UIImage();
                         self.modalImage.layoutIfNeeded()
-                        readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "", person:"Martha")
-                        resetImages()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            self.backgroundModal.alpha = 0
-                            self.backgroundModal.layoutIfNeeded()
-                            self.modalImage.isHidden = true
-                            self.modalImage.image = UIImage();
-                            self.modalImage.layoutIfNeeded()
-
-                        }
+                        
+                    }
                 }else{
                     let imageSplitSize = self.rightImages.count/2;
+                    let animationDuration = leftRightLookDelay/2
+                    self.TopStack.bringSubviewToFront(self.RightIconsView)
+                    UIView.animate(withDuration: animationDuration, animations: {() -> Void in
+                        for i in 0 ..< self.leftImages.count {
+                            self.leftImages[i].imageView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+                            
+                        }
+                        
+                    }, completion: {(_ finished: Bool) -> Void in
+                        
+                        for i in 0 ..< self.leftImages.count {
+                            self.leftImages[i].imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            self.leftImages[i].imageView.image = UIImage();
+                            
+                        }
+                        
+                        UIView.animate(withDuration: animationDuration, animations: {() -> Void in
+                            for i in 0 ..< imageSplitSize {
+                                let leftImagePoint =  self.leftImages[i].imageView.convert(self.leftImages[i].imageView.bounds, to: self.TopStack)
+                                let rightImagePoint = self.rightImages[i+imageSplitSize].imageView.convert(self.rightImages[i+imageSplitSize].imageView.bounds, to: self.TopStack)
+                                self.rightImages[i+imageSplitSize].imageView.transform = CGAffineTransform(translationX: leftImagePoint.origin.x-rightImagePoint.origin.x, y: leftImagePoint.origin.y-rightImagePoint.origin.y)
+                            }
+                            
+                            
+                        }, completion: {(_ finished: Bool) -> Void in
+                            for i in 0 ..< imageSplitSize {
+                                self.leftImages[i].imageView.image = self.rightImages[i+imageSplitSize].imageView.image
+                                self.leftImagesGlobal[i].name = self.rightImages[i+imageSplitSize].name;
+                                self.rightImages[i+imageSplitSize].imageView.image = UIImage()
+                                self.rightImages[i+imageSplitSize].imageView.transform = CGAffineTransform(translationX:0,y:0)
+                            }
+                            let initsize = self.rightImages.count/2;
+                            self.leftImages = Array(self.leftImagesGlobal[0 ..< initsize])
+                            self.rightImages = Array(self.rightImagesGlobal[0 ..< initsize])
+                        })
+                    })
                     
-                    for i in 0 ..< imageSplitSize {
-                        self.leftImages[i].imageView.image = self.rightImages[i+imageSplitSize].imageView.image;
-                        self.leftImagesGlobal[i].name = self.rightImages[i+imageSplitSize].name;
-                    }
-                    for i in imageSplitSize ..< self.leftImages.count {
-                        self.leftImages[i].imageView.image = UIImage();
-                    }
-                    
-                    for i in imageSplitSize ..< self.rightImages.count {
-                        self.rightImages[i].imageView.image = UIImage();
-                    }
-                    
-                    
-                    
-                    let initsize = rightImages.count/2;
-                    leftImages = Array(leftImagesGlobal[0 ..< initsize])
-                    rightImages = Array(rightImagesGlobal[0 ..< initsize])
                     
                     
                     startLookTime = Double.greatestFiniteMagnitude;
@@ -328,7 +405,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             lookDirection = "RESET";
         }else{
-            
+            if lookDirection == "LEFT" && timeactivateleftright < currentTime - startLookTime {
+                let timestampdiff = (currentTime - startLookTime - timeactivateleftright) / (leftRightLookDelay - timeactivateleftright);
+                LeftArrowBackground.alpha = timestampdiff
+                //leftarrowelement.style.backgroundColor = backgroundColorChange(timestampdiff);
+            } else if lookDirection == "RIGHT" && timeactivateleftright < currentTime - startLookTime {
+                let timestampdiff = (currentTime - startLookTime - timeactivateleftright) / (leftRightLookDelay - timeactivateleftright);
+                RightArrowBackground.alpha = timestampdiff
+                //rightarrowelement.style.backgroundColor = backgroundColorChange(timestampdiff);
+            }
         }
     }
     

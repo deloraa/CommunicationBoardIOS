@@ -16,6 +16,8 @@
 		FD5E3E69278A3C3600AD4CF9 /* CommunicationBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E68278A3C3600AD4CF9 /* CommunicationBoardTests.swift */; };
 		FD5E3E73278A3C3600AD4CF9 /* CommunicationBoardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E72278A3C3600AD4CF9 /* CommunicationBoardUITests.swift */; };
 		FD5E3E75278A3C3600AD4CF9 /* CommunicationBoardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E74278A3C3600AD4CF9 /* CommunicationBoardUITestsLaunchTests.swift */; };
+		FD682317278E8E1F001F695D /* CommBoard.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FD682316278E8E1F001F695D /* CommBoard.mp4 */; };
+		FD68231B278E8F7C001F695D /* howToViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD68231A278E8F7C001F695D /* howToViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		FD5E3E6E278A3C3600AD4CF9 /* CommunicationBoardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunicationBoardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD5E3E72278A3C3600AD4CF9 /* CommunicationBoardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationBoardUITests.swift; sourceTree = "<group>"; };
 		FD5E3E74278A3C3600AD4CF9 /* CommunicationBoardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationBoardUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FD682316278E8E1F001F695D /* CommBoard.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = CommBoard.mp4; path = ../../../Downloads/CommBoard.mp4; sourceTree = "<group>"; };
+		FD68231A278E8F7C001F695D /* howToViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howToViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +103,11 @@
 		FD5E3E50278A3C3400AD4CF9 /* CommunicationBoard */ = {
 			isa = PBXGroup;
 			children = (
+				FD682316278E8E1F001F695D /* CommBoard.mp4 */,
 				FD5E3E51278A3C3400AD4CF9 /* AppDelegate.swift */,
 				FD5E3E53278A3C3400AD4CF9 /* SceneDelegate.swift */,
 				FD5E3E55278A3C3400AD4CF9 /* ViewController.swift */,
+				FD68231A278E8F7C001F695D /* howToViewController.swift */,
 				FD5E3E57278A3C3400AD4CF9 /* Main.storyboard */,
 				FD5E3E5A278A3C3600AD4CF9 /* Assets.xcassets */,
 				FD5E3E5C278A3C3600AD4CF9 /* LaunchScreen.storyboard */,
@@ -231,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD682317278E8E1F001F695D /* CommBoard.mp4 in Resources */,
 				FD5E3E5E278A3C3600AD4CF9 /* LaunchScreen.storyboard in Resources */,
 				FD5E3E5B278A3C3600AD4CF9 /* Assets.xcassets in Resources */,
 				FD5E3E59278A3C3400AD4CF9 /* Main.storyboard in Resources */,
@@ -258,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD68231B278E8F7C001F695D /* howToViewController.swift in Sources */,
 				FD5E3E56278A3C3400AD4CF9 /* ViewController.swift in Sources */,
 				FD5E3E52278A3C3400AD4CF9 /* AppDelegate.swift in Sources */,
 				FD5E3E54278A3C3400AD4CF9 /* SceneDelegate.swift in Sources */,

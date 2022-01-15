@@ -23,11 +23,15 @@ extension Array {
 }
 
 
-class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
     let DEVICE_NAME = "ESP32_Bluetooth";
     let SEND_SERVICE = CBUUID(string:"6e400001-b5a3-f393-e0a9-e50e24dcca9e");
     let SEND_SERVICE_CHARACTERISTIC = CBUUID(string:"6e400002-b5a3-f393-e0a9-e50e24dcca9e");
     var centralManager: CBCentralManager!
+    var esp32Peripheral: CBPeripheral!
+    var esp32Characteristic: CBCharacteristic!
+    var bluetoothConencted = false;
+    var bluetoothFirstInitialized = true;
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
           case .unknown:
@@ -49,10 +53,79 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         
     }
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print(peripheral)
+        print(peripheral.services)
+        print(peripheral.name)
+        if peripheral.name ?? "" == "ESP32_Bluetooth" {
+            esp32Peripheral = peripheral;
+            esp32Peripheral.delegate = self
+            centralManager.stopScan()
+            centralManager.connect(esp32Peripheral)
+            
+        }
+
     }
+    
+    
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        print("Connected!")
+        bluetoothConencted = true
+        bluetoothButtonOutlet.tintColor = UIColor.systemBlue
+        esp32Peripheral.discoverServices([SEND_SERVICE])
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        bluetoothConencted = false
+        bluetoothButtonOutlet.tintColor = UIColor.black
+    }
+    
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        bluetoothConencted = false
+        bluetoothButtonOutlet.tintColor = UIColor.black
+        let alert = UIAlertController(title: "Alert", message: "Failed to connect to bluetooth device", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        guard let services = peripheral.services else { return }
+        for service in services {
+          print(service)
+          peripheral.discoverCharacteristics(nil, for: service)
+        }
+    }
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService,
+                    error: Error?) {
+      guard let characteristics = service.characteristics else { return }
+
+      for characteristic in characteristics {
+
+          if characteristic.uuid == SEND_SERVICE_CHARACTERISTIC{
+              print(characteristic)
+              esp32Characteristic = characteristic
+              let alert = UIAlertController(title: "Success", message: "You have successfully connected to bluetooth", preferredStyle: UIAlertController.Style.alert)
+              alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: nil))
+              self.present(alert, animated: true, completion: nil)
+              peripheral.writeValue(Data([UInt8(12)]), for: characteristic, type: .withResponse)
+          }
+
+      }
+    }
+    
+    
+    @IBOutlet weak var bluetoothButtonOutlet: UIButton!
     @IBAction func bluetoothButton(_ sender: Any) {
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+        if !bluetoothConencted{
+            if bluetoothFirstInitialized{
+                bluetoothFirstInitialized = false
+                centralManager = CBCentralManager(delegate: self, queue: nil)
+            }else{
+                centralManagerDidUpdateState(centralManager)
+            }
+            
+        }else{
+            centralManager.cancelPeripheralConnection(esp32Peripheral)
+
+        }
     }
     
     @IBOutlet weak var RightIconsView: UIView!
@@ -616,3 +689,4 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     }
     
 }
+

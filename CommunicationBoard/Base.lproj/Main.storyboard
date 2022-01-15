@@ -497,6 +497,7 @@
                         <outlet property="RightIconsView" destination="jLZ-Dh-6dM" id="I3n-5O-4e1"/>
                         <outlet property="TopStack" destination="3Ij-Fi-jZv" id="9uf-2h-SO5"/>
                         <outlet property="backgroundModal" destination="F0R-pa-hyc" id="OBU-Nl-KR7"/>
+                        <outlet property="bluetoothButtonOutlet" destination="Xm8-jN-klc" id="s3t-fb-Nef"/>
                         <outlet property="circularProgress" destination="LTE-Yj-jdG" id="KlU-dE-rXi"/>
                         <outlet property="circularProgressImageView" destination="yEk-rR-6SX" id="rP7-9L-qND"/>
                         <outlet property="modalImage" destination="G7K-iT-6mJ" id="Dpk-XD-4V1"/>

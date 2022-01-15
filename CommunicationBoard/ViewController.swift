@@ -105,7 +105,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
               let alert = UIAlertController(title: "Success", message: "You have successfully connected to bluetooth", preferredStyle: UIAlertController.Style.alert)
               alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: nil))
               self.present(alert, animated: true, completion: nil)
-              peripheral.writeValue(Data([UInt8(12)]), for: characteristic, type: .withResponse)
+              //peripheral.writeValue(Data([UInt8(12)]), for: characteristic, type: .withResponse)
           }
 
       }
@@ -527,6 +527,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.backgroundModal.alpha = 0.5
                     self.backgroundModal.layoutIfNeeded()
                     self.modalImage.isHidden = false
+                    if (bluetoothConencted) {
+                        if self.leftImages[0].name == "21-Situp" {
+                            esp32Peripheral.writeValue(Data([UInt8(12)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "22-LieDown" {
+                            esp32Peripheral.writeValue(Data([UInt8(13)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "24-TVVideo" {
+                            esp32Peripheral.writeValue(Data([UInt8(14)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "25-Light" {
+                            esp32Peripheral.writeValue(Data([UInt8(25)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "26-CallLight" {
+                            esp32Peripheral.writeValue(Data([UInt8(26)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "7-Nurse" {
+                            esp32Peripheral.writeValue(Data([UInt8(26)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "27-Water" {
+                            esp32Peripheral.writeValue(Data([UInt8(27)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.leftImages[0].name == "29-Suction" {
+                            esp32Peripheral.writeValue(Data([UInt8(32)]), for: esp32Characteristic, type: .withResponse)
+                        }
+                    }
+                    
                     if self.leftImages[0].name == "32-SoundOff"{
                         self.settingsVals.soundOn = true
                         self.leftImages[0].imageView.image = UIImage(named: "32-SoundOn")
@@ -602,6 +622,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.backgroundModal.alpha = 0.5
                     self.backgroundModal.layoutIfNeeded()
                     self.modalImage.isHidden = false
+                    if (bluetoothConencted) {
+                        if self.rightImages[0].name == "21-Situp" {
+                            esp32Peripheral.writeValue(Data([UInt8(12)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "22-LieDown" {
+                            esp32Peripheral.writeValue(Data([UInt8(13)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "24-TVVideo" {
+                            esp32Peripheral.writeValue(Data([UInt8(14)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "25-Light" {
+                            esp32Peripheral.writeValue(Data([UInt8(25)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "26-CallLight" {
+                            esp32Peripheral.writeValue(Data([UInt8(26)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "7-Nurse" {
+                            esp32Peripheral.writeValue(Data([UInt8(26)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "27-Water" {
+                            esp32Peripheral.writeValue(Data([UInt8(27)]), for: esp32Characteristic, type: .withResponse)
+                        } else if self.rightImages[0].name == "29-Suction" {
+                            esp32Peripheral.writeValue(Data([UInt8(32)]), for: esp32Characteristic, type: .withResponse)
+                        }
+                    }
                     if self.rightImages[0].name == "32-SoundOff"{
                         self.settingsVals.soundOn = true
                         self.rightImages[0].imageView.image = UIImage(named: "32-SoundOn")

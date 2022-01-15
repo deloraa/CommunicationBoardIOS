@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 import ARKit
 import AVFoundation
-
+import CoreBluetooth
 
 
 extension Array {
@@ -23,7 +23,37 @@ extension Array {
 }
 
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDelegate {
+    let DEVICE_NAME = "ESP32_Bluetooth";
+    let SEND_SERVICE = CBUUID(string:"6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+    let SEND_SERVICE_CHARACTERISTIC = CBUUID(string:"6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+    var centralManager: CBCentralManager!
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        switch central.state {
+          case .unknown:
+            print("central.state is .unknown")
+          case .resetting:
+            print("central.state is .resetting")
+          case .unsupported:
+            print("central.state is .unsupported")
+          case .unauthorized:
+            print("central.state is .unauthorized")
+          case .poweredOff:
+            print("central.state is .poweredOff")
+          case .poweredOn:
+            print("central.state is .poweredOn")
+            centralManager.scanForPeripherals(withServices: nil)
+        @unknown default:
+            print("bluetooth unknown case")
+        }
+        
+    }
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        print(peripheral)
+    }
+    @IBAction func bluetoothButton(_ sender: Any) {
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+    }
     
     @IBOutlet weak var RightIconsView: UIView!
     @IBOutlet weak var LeftIconsView: UIView!
@@ -79,7 +109,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //let sourceViewController = unwindSegue.source
         // Use data from the view controller which initiated the unwind segue
         settingsOpen = false
-        print("unwindhowto")
     }
 
     @IBAction func unwindToSettings(_ unwindSegue: UIStoryboardSegue) {
@@ -88,17 +117,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         settingsOpen = false
         guard let settingsVC = unwindSegue.source as? settingsViewController else {return}
         self.settingsVals = settingsVC.settingsVals
-        print("unwindSettings")
         
+        for i in 0 ..< leftImages.count {
+            if settingsVals.soundOn && leftImages[i].name == "32-SoundOff"{
+                leftImages[i].imageView.image = UIImage(named: "32-SoundOn")
+                leftImages[i].name = "32-SoundOn"
+            } else if !settingsVals.soundOn && leftImages[i].name == "32-SoundOn"{
+                leftImages[i].imageView.image = UIImage(named: "32-SoundOff")
+                leftImages[i].name = "32-SoundOff"
+            }
+        }
+        
+        for i in 0 ..< rightImages.count {
+            if settingsVals.soundOn && rightImages[i].name == "32-SoundOff"{
+                rightImages[i].imageView.image = UIImage(named: "32-SoundOn")
+                rightImages[i].name = "32-SoundOn"
+            } else if !settingsVals.soundOn && rightImages[i].name == "32-SoundOn"{
+                rightImages[i].imageView.image = UIImage(named: "32-SoundOff")
+                rightImages[i].name = "32-SoundOff"
+            }
+        }
+        
+        if settingsVals.soundOn && iconImages[31].name == "32-SoundOff"{
+            iconImages[31].image = UIImage(named: "32-SoundOn")
+            iconImages[31].name = "32-SoundOn"
+        } else if !settingsVals.soundOn && iconImages[31].name == "32-SoundOn"{
+            iconImages[31].image = UIImage(named: "32-SoundOff")
+            iconImages[31].name = "32-SoundOff"
+        }
     }
+    
     @IBAction func unwindToAbout(_ unwindSegue: UIStoryboardSegue) {
         //let sourceViewController = unwindSegue.source
         // Use data from the view controller which initiated the unwind segue
         settingsOpen = false
-        print("unwindAbout")
     }
+    
     var iconImageViews = [(String,UIImageView)]()
-    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOff":"Turn sound on or off"]
+    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOn":"Turn sound on"]
 
     var iconImages = [(name: "1-Afraid", image:UIImage(named: "1-Afraid")),(name: "2-Pain", image:UIImage(named: "2-Pain")),(name: "3-Yes", image:UIImage(named: "3-Yes")),(name: "4-No", image:UIImage(named: "4-No")),(name: "5-Sad", image:UIImage(named: "5-Sad")),(name: "6-Frustrated", image:UIImage(named: "6-Frustrated")),(name: "7-Nurse", image:UIImage(named: "7-Nurse")),(name: "8-Doctor", image:UIImage(named: "8-Doctor")),(name: "9-Tired", image:UIImage(named: "9-Tired")),(name: "10-FeelSick", image:UIImage(named: "10-FeelSick")),(name: "11-Cold_hot", image:UIImage(named: "11-Cold_hot")),(name: "12-ShortofBreath", image:UIImage(named: "12-ShortofBreath")),(name: "13-Angry", image:UIImage(named: "13-Angry")),(name: "14-Dizzy", image:UIImage(named: "14-Dizzy")),(name: "15-Choking", image:UIImage(named: "15-Choking")),(name: "16-Hungry", image:UIImage(named: "16-Hungry")),(name: "17-HowamI", image:UIImage(named: "17-HowamI")),(name: "18-WhatTime", image:UIImage(named: "18-WhatTime")),(name: "19-WhatsHappening", image:UIImage(named: "19-WhatsHappening")),(name: "20-Comeback", image:UIImage(named: "20-Comeback")),(name: "21-Situp", image:UIImage(named: "21-Situp")),(name: "22-LieDown", image:UIImage(named: "22-LieDown")),(name: "23-Home", image:UIImage(named: "23-Home")),(name: "24-TVVideo", image:UIImage(named: "24-TVVideo")),(name: "25-Light", image:UIImage(named: "25-Light")),(name: "26-CallLight", image:UIImage(named: "26-CallLight")),(name: "27-Water", image:UIImage(named: "27-Water")),(name: "28-Glasses", image:UIImage(named: "28-Glasses")),(name: "29-Suction", image:UIImage(named: "29-Suction")),(name: "30-LipsMoistened", image:UIImage(named: "30-LipsMoistened")),(name: "31-Sleep", image:UIImage(named: "31-Sleep")),(name: "32-SoundOff", image:UIImage(named: "32-SoundOff"))]
     
@@ -106,7 +162,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var rightImagesGlobal = [(name:String,imageView:UIImageView)]();
     var leftImages = [(name:String,imageView:UIImageView)]();
     var rightImages = [(name:String,imageView:UIImageView)]();
-    var topText = "Running: Look up to pause or blink one eye\n to reset."
+    var topText = "Running: Look up to pause or blink one eye to reset."
 
     var settingsVals = Settings();
 
@@ -178,28 +234,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         rightImagesGlobal = tempIconImagesGlobal.right;
         leftImages = leftImagesGlobal;
         rightImages = rightImagesGlobal;
-
-/*
-        print(self.Icon10.frame.midX)
-        print(self.Icon12.frame.midX)
-        print(self.Icon12.frame.origin)
-        let globalPoint =  self.Icon10.convert(self.Icon10.bounds, to: TopStack)
-        let globalPoint2 = self.Icon12.convert(self.Icon12.bounds, to: TopStack)
-        print(globalPoint)
-        print(globalPoint2)
-        
-        let icon12xvalue = self.Icon12.superview!.superview!.superview!.frame.origin.x - self.Icon27.superview!.superview!.superview!.frame.origin.x
-        let icon27xvalue = self.Icon12.frame.origin.x-self.Icon27.frame.origin.x
-*/
- /*
-        UIView.animate(withDuration: 2.0, animations: {() -> Void in
-            self.Icon2?.transform = CGAffineTransform(translationX: 179, y: 88 )
-        }, completion: {(_ finished: Bool) -> Void in
-            /*UIView.animate(withDuration: 2.0, animations: {() -> Void in
-                self.Icon12?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            })*/
-        })*/
-
 
     }
     
@@ -310,7 +344,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // was actually right eye blink
         //print("\(eyeBlinkLeft?.decimalValue ?? 0.0)")
         // when this function is running I want to signal to the user that the function is reacting
-        
+        if lookupRun{
+            topText = "Running: Look up to pause or blink one eye to reset."
+        }else{
+            topText = "Paused: Look up to resume or blink one eye to reset."
+        }
         if (((eyeBlinkLeft > settingsVals.blinkCutoff && eyeBlinkRight < settingsVals.blinkCutoff) || (eyeBlinkLeft < settingsVals.blinkCutoff && eyeBlinkRight > settingsVals.blinkCutoff)) && blinklookupVal != "RESET" && blinklookupVal != "BLINK") {
             blinklookupVal = "BLINK";
             blinklookupStartTime = currentTime;
@@ -416,9 +454,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     self.backgroundModal.alpha = 0.5
                     self.backgroundModal.layoutIfNeeded()
                     self.modalImage.isHidden = false
+                    if self.leftImages[0].name == "32-SoundOff"{
+                        self.settingsVals.soundOn = true
+                        self.leftImages[0].imageView.image = UIImage(named: "32-SoundOn")
+                        self.leftImages[0].name = "32-SoundOn"
+                        self.iconImages[31].image = UIImage(named: "32-SoundOn")
+                        self.iconImages[31].name = "32-SoundOn"
+                    }else if self.leftImages[0].name == "32-SoundOn"{
+                        self.settingsVals.soundOn = false
+                        self.leftImages[0].imageView.image = UIImage(named: "32-SoundOff")
+                        self.leftImages[0].name = "32-SoundOff"
+                        self.iconImages[31].image = UIImage(named: "32-SoundOff")
+                        self.iconImages[31].name = "32-SoundOff"
+                    }
                     self.modalImage.image = self.leftImages[0].imageView.image
                     self.modalImage.layoutIfNeeded()
-                    readSound(readme:self.imageToSoundString[self.leftImages[0].name] ?? "" , person:"Martha")
+                    if settingsVals.soundOn{
+                        readSound(readme:self.imageToSoundString[self.leftImages[0].name] ?? "" , person:"Martha")
+                    }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         self.backgroundModal.alpha = 0
@@ -476,9 +529,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     self.backgroundModal.alpha = 0.5
                     self.backgroundModal.layoutIfNeeded()
                     self.modalImage.isHidden = false
+                    if self.rightImages[0].name == "32-SoundOff"{
+                        self.settingsVals.soundOn = true
+                        self.rightImages[0].imageView.image = UIImage(named: "32-SoundOn")
+                        self.rightImages[0].name = "32-SoundOn"
+                        self.iconImages[31].image = UIImage(named: "32-SoundOn")
+                        self.iconImages[31].name = "32-SoundOn"
+                    }else if self.rightImages[0].name == "32-SoundOn"{
+                        self.settingsVals.soundOn = false
+                        self.rightImages[0].imageView.image = UIImage(named: "32-SoundOff")
+                        self.rightImages[0].name = "32-SoundOff"
+                        self.iconImages[31].image = UIImage(named: "32-SoundOff")
+                        self.iconImages[31].name = "32-SoundOff"
+                    }
                     self.modalImage.image = self.rightImages[0].imageView.image
                     self.modalImage.layoutIfNeeded()
-                    readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "", person:"Martha")
+                    //if self.rightImages[0].name
+                    if settingsVals.soundOn{
+                        readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "", person:"Martha")
+                    }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         self.backgroundModal.alpha = 0

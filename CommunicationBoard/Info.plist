@@ -4,6 +4,8 @@
 <dict>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Uses Blutooth to Connect To Nearby Device to Interact with Lights, TV and Nurse Call Button</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Uses Bluetooth to Connect to Nearby Devices to Interact with Lights, TV and Nurse Call Button</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Uses Camera To Track Eye Movements</string>
 	<key></key>

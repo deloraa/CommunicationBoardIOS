@@ -9,10 +9,36 @@ import UIKit
 
 class settingsViewController: UIViewController {
     var settingsVals: Settings!
+    
+    @IBOutlet weak var lookLeftRightSliderOutlet: UISlider!
+    @IBOutlet weak var lookLeftRightDelaySliderOutlet: UISlider!
+    @IBOutlet weak var lookUpSliderOutlet: UISlider!
+    @IBOutlet weak var blinkSensitivityOutlet: UISlider!
+    @IBOutlet weak var blinkDelayOutlet: UISlider!
+    @IBOutlet weak var soundButtonOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        lookLeftRightSliderOutlet.setValue(Float(settingsVals.leftRightCutoff), animated: false)
+        lookLeftRightSliderLabel.text = String(format: "%.1f", settingsVals.leftRightCutoff)
+        
+        lookLeftRightDelaySliderOutlet.setValue(Float(settingsVals.leftRightLookDelay), animated: false)
+        lookLeftRightDelaySliderLabel.text = String(format: "%.1f", settingsVals.leftRightLookDelay)
+        
+        lookUpSliderOutlet.setValue(Float(settingsVals.lookupCuttoff), animated: false)
+        lookUpSliderLabel.text = String(format: "%.1f", settingsVals.lookupCuttoff)
+        
+        blinkSensitivityOutlet.setValue(Float(settingsVals.blinkCutoff), animated: false)
+        blinkSliderLabel.text = String(format: "%.1f", settingsVals.blinkCutoff)
+        
+        blinkDelayOutlet.setValue(Float(settingsVals.blinkDelay), animated: false)
+        blinkDelaySliderLabel.text = String(format: "%.1f", settingsVals.blinkDelay)
+        
+        if settingsVals.soundOn{
+            soundButtonOutlet.setTitle("Sound On", for: .normal)
+        }else{
+            soundButtonOutlet.setTitle("Sound Off", for: .normal)
+        }
     }
     
     @IBOutlet weak var lookLeftRightSliderLabel: UILabel!
@@ -66,6 +92,16 @@ class settingsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.performSegue(withIdentifier: "unwindToSettings", sender: self)
+    }
+    
+    @IBAction func soundButton(_ sender: UIButton) {
+        if settingsVals.soundOn{
+            settingsVals.soundOn = false
+            sender.setTitle("Sound Off", for: .normal)
+        }else{
+            settingsVals.soundOn = true
+            sender.setTitle("Sound On", for: .normal)
+        }
     }
     
 }

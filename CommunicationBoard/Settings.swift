@@ -15,4 +15,5 @@ struct Settings{
     var blinkDelay = 1.200;
     var timeactivateleftright = 0.15;
     var timeactivateblink = 0.36;
+    var soundOn=false;
 }

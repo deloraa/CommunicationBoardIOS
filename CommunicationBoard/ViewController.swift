@@ -10,6 +10,8 @@ import SceneKit
 import ARKit
 import AVFoundation
 
+
+
 extension Array {
     func split() -> (left: [Element], right: [Element]) {
         let ct = self.count
@@ -67,8 +69,34 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var Icon30: UIImageView!
     @IBOutlet weak var Icon31: UIImageView!
     @IBOutlet weak var Icon32: UIImageView!
+  
+    @IBOutlet weak var circularProgress: CircularProgressView!
+    @IBOutlet weak var circularProgressImageView: UIImageView!
+    
     
     var settingsOpen = false;
+    @IBAction func unwindToHowTo(_ unwindSegue: UIStoryboardSegue) {
+        //let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
+        settingsOpen = false
+        print("unwindhowto")
+    }
+
+    @IBAction func unwindToSettings(_ unwindSegue: UIStoryboardSegue) {
+        //let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
+        settingsOpen = false
+        guard let settingsVC = unwindSegue.source as? settingsViewController else {return}
+        self.settingsVals = settingsVC.settingsVals
+        print("unwindSettings")
+        
+    }
+    @IBAction func unwindToAbout(_ unwindSegue: UIStoryboardSegue) {
+        //let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
+        settingsOpen = false
+        print("unwindAbout")
+    }
     var iconImageViews = [(String,UIImageView)]()
     var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOff":"Turn sound on or off"]
 
@@ -78,18 +106,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var rightImagesGlobal = [(name:String,imageView:UIImageView)]();
     var leftImages = [(name:String,imageView:UIImageView)]();
     var rightImages = [(name:String,imageView:UIImageView)]();
-    var topText = "Running: Blink either eye to pause"
-    
-    var widthThreshold = 0.5;
-    var leftRightLookDelay = 0.500;
-    var upperBlinkCutoff = 0.5;
-    var lowerBlinkCutoff = 0.5;
-    var blinkDelay = 1.200;
-    var timeactivateleftright = 0.09;
-    var timeactivateblink = 0.36;
+    var topText = "Running: Look up to pause or blink one eye\n to reset."
+
+    var settingsVals = Settings();
+
+    var lookupRun = true;
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //settingsOpen = true
-        print("settings open")
+        settingsOpen = true
+        if segue.identifier == "settingsSegue"{
+            let settingsVC = segue.destination as! settingsViewController
+            settingsVC.settingsVals = self.settingsVals
+
+        }
+
     }
 
     func resetImages(){
@@ -122,15 +151,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         return superView!.convert(pnt, to: baseView)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+    
+
+        if (!ARConfiguration.isSupported) {
+
+            let alert = UIAlertController(title: "Alert", message: "ARKit not supported on this device", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         sceneView.delegate = self
 
         iconImageViews =
         [(name: "1-Afraid", imageView:Icon1),(name: "2-Pain", imageView:Icon2),(name: "3-Yes", imageView:Icon3),(name: "4-No", imageView:Icon4),(name: "5-Sad", imageView:Icon5),(name: "6-Frustrated", imageView:Icon6),(name: "7-Nurse", imageView:Icon7),(name: "8-Doctor", imageView:Icon8),(name: "9-Tired", imageView:Icon9),(name: "10-FeelSick", imageView:Icon10),(name: "11-Cold_hot", imageView:Icon11),(name: "12-ShortofBreath", imageView:Icon12),(name: "13-Angry", imageView:Icon13),(name: "14-Dizzy", imageView:Icon14),(name: "15-Choking", imageView:Icon15),(name: "16-Hungry", imageView:Icon16),(name: "17-HowamI", imageView:Icon17),(name: "18-WhatTime", imageView:Icon18),(name: "19-WhatsHappening", imageView:Icon19),(name: "20-Comeback", imageView:Icon20),(name: "21-Situp", imageView:Icon21),(name: "22-LieDown", imageView:Icon22),(name: "23-Home", imageView:Icon23),(name: "24-TVVideo", imageView:Icon24),(name: "25-Light", imageView:Icon25),(name: "26-CallLight", imageView:Icon26),(name: "27-Water", imageView:Icon27),(name: "28-Glasses", imageView:Icon28),(name: "29-Suction", imageView:Icon29),(name: "30-LipsMoistened", imageView:Icon30),(name: "31-Sleep", imageView:Icon31),(name: "32-SoundOff", imageView:Icon32)]
-        timeactivateleftright = 3/10*leftRightLookDelay;
-        timeactivateblink = 3/10*blinkDelay;
+
         
         let tempIconImagesGlobal = iconImageViews.split();
         leftImagesGlobal = tempIconImagesGlobal.left;
@@ -242,6 +283,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     var lookDirection = "";
     var startLookTime = Double.greatestFiniteMagnitude;
+    var blinklookupStartTime = Double.greatestFiniteMagnitude;
+    var blinklookupVal="";
     func readMyFace(anchor: ARFaceAnchor) {
         if settingsOpen{
             return;
@@ -250,43 +293,122 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let currentTime = Date().timeIntervalSince1970;
         // function that takes an ARFaceAnchor in as a parameter
         //left look values
-        let eyeLookInLeft = anchor.blendShapes[.eyeLookInLeft]
-        let eyeLookOutRight = anchor.blendShapes[.eyeLookOutRight]
+        let eyeLookInLeft = Double(truncating: anchor.blendShapes[.eyeLookInLeft] ?? 0.0 as NSNumber)
+        let eyeLookOutRight = Double(truncating: anchor.blendShapes[.eyeLookOutRight] ?? 0.0 as NSNumber)
         
         //right look values
-        let eyeLookOutLeft = anchor.blendShapes[.eyeLookOutLeft]
-        let eyeLookInRight = anchor.blendShapes[.eyeLookInRight]
+        let eyeLookOutLeft = Double(truncating: anchor.blendShapes[.eyeLookOutLeft] ?? 0.0 as NSNumber)
+        let eyeLookInRight = Double(truncating: anchor.blendShapes[.eyeLookInRight] ?? 0.0 as NSNumber)
         
-        //let eyeBlinkRight = anchor.blendShapes[.eyeBlinkRight]
-        //let eyeBlinkLeft = anchor.blendShapes[.eyeBlinkLeft]
+        let eyeBlinkRight = Double(truncating: anchor.blendShapes[.eyeBlinkRight] ?? 0.0 as NSNumber)
+        let eyeBlinkLeft = Double(truncating: anchor.blendShapes[.eyeBlinkLeft] ?? 0.0 as NSNumber)
         
+        
+        let eyeLookUpLeft = Double(truncating: anchor.blendShapes[.eyeLookUpLeft] ?? 0.0 as NSNumber)
+        let eyeLookUpRight = Double(truncating: anchor.blendShapes[.eyeLookUpRight] ?? 0.0 as NSNumber)
         // Define different anchors utilizing classes in the imported kit
         // was actually right eye blink
         //print("\(eyeBlinkLeft?.decimalValue ?? 0.0)")
         // when this function is running I want to signal to the user that the function is reacting
         
+        if (((eyeBlinkLeft > settingsVals.blinkCutoff && eyeBlinkRight < settingsVals.blinkCutoff) || (eyeBlinkLeft < settingsVals.blinkCutoff && eyeBlinkRight > settingsVals.blinkCutoff)) && blinklookupVal != "RESET" && blinklookupVal != "BLINK") {
+            blinklookupVal = "BLINK";
+            blinklookupStartTime = currentTime;
+        } else if eyeLookUpLeft > settingsVals.lookupCuttoff && eyeLookUpRight > settingsVals.lookupCuttoff && blinklookupVal != "LOOKUP" && blinklookupVal != "RESET"{
+            blinklookupVal = "LOOKUP";
+            blinklookupStartTime = currentTime;
+        }else if (eyeBlinkLeft < settingsVals.blinkCutoff && eyeBlinkRight < settingsVals.blinkCutoff && eyeLookUpLeft < settingsVals.lookupCuttoff && eyeLookUpRight < settingsVals.lookupCuttoff) {
+            blinklookupVal = "";
+            blinklookupStartTime = Double.greatestFiniteMagnitude;
+             //setProgressBarValue(0, 0, `pause`);
+            circularProgress.isHidden = true
+            if (!lookupRun) {
+                 circularProgress.isHidden = false
+                 circularProgress.setValue(value: 0.0)
+                 circularProgressImageView.image = UIImage(systemName: "pause.fill")
 
+             } else {
+                 circularProgress.isHidden = true
+                 circularProgress.setValue(value: 0.0)
+                 circularProgressImageView.image = UIImage(systemName: "pause.fill")
+ 
+             }
+         }
+
+        if (blinklookupStartTime + settingsVals.blinkDelay < currentTime) {
+             if (blinklookupVal == "BLINK") {
+                 circularProgress.isHidden = false
+                 circularProgress.setValue(value: 1)
+                 circularProgressImageView.image = UIImage(systemName: "arrow.uturn.backward")
+                 //setProgressBarValue(1, 1, `loop`);
+                 resetImages();
+                 startLookTime = Double.greatestFiniteMagnitude;
+                 lookDirection = "";
+                 blinklookupStartTime = Double.greatestFiniteMagnitude;
+                 blinklookupVal = "STOP";
+                 
+             }else if(blinklookupVal == "LOOKUP"){
+                 if (lookupRun) {
+                     //setProgressBarValue(1, 1, `pause`);
+                     circularProgress.isHidden = false
+                     circularProgress.setValue(value: 1)
+                     circularProgressImageView.image = UIImage(systemName: "pause.fill")
+                     lookupRun = false;
+                 } else {
+                     //setProgressBarValue(1, 1, `play_arrow`);
+                     circularProgress.isHidden = false
+                     circularProgress.setValue(value: 1)
+                     circularProgressImageView.image = UIImage(systemName: "play.fill")
+                     lookupRun = true;
+                 }
+                 blinklookupStartTime = Double.greatestFiniteMagnitude;
+                 blinklookupVal = "STOP";
+             }
+             blinklookupVal = "RESET";
+          }else {
+              if (settingsVals.timeactivateblink < currentTime - blinklookupStartTime) {
+                  let timestampdiff = (currentTime - blinklookupStartTime - settingsVals.timeactivateblink) / (settingsVals.blinkDelay - settingsVals.timeactivateblink);
+                  if blinklookupVal == "BLINK"{
+                      circularProgress.isHidden = false
+                      circularProgress.setValue(value: timestampdiff)
+                      circularProgressImageView.image = UIImage(systemName: "arrow.uturn.backward")
+                  }else if blinklookupVal == "LOOKUP" {
+                      if (lookupRun) {
+                          circularProgress.isHidden = false
+                          circularProgress.setValue(value: timestampdiff)
+                          circularProgressImageView.image = UIImage(systemName: "pause.fill")
+                      } else {
+                          circularProgress.isHidden = false
+                          circularProgress.setValue(value: timestampdiff)
+                          circularProgressImageView.image = UIImage(systemName: "play.fill")
+                      }
+                  }
+              }
+
+         }
+
+        if !lookupRun {return}
         
-        if eyeLookOutRight?.decimalValue ?? 0.0 > 0.5 && eyeLookInLeft?.decimalValue ?? 0.0 > 0.5 && lookDirection != "LEFT" && lookDirection != "RESET"
+        if eyeLookOutRight > settingsVals.leftRightCutoff && eyeLookInLeft > settingsVals.leftRightCutoff && lookDirection != "LEFT" && lookDirection != "RESET"
         {
             startLookTime = currentTime;
             lookDirection = "LEFT";
             RightArrowBackground.alpha = 0
             //rightarrowelement.style.backgroundColor = backgroundColorChange(0);
             
-        } else if eyeLookOutLeft?.decimalValue ?? 0.0 > 0.5 && eyeLookInRight?.decimalValue ?? 0.0 > 0.5 && lookDirection != "RIGHT" && lookDirection != "RESET"
+        } else if eyeLookOutLeft > settingsVals.leftRightCutoff && eyeLookInRight > settingsVals.leftRightCutoff && lookDirection != "RIGHT" && lookDirection != "RESET"
         {
             startLookTime = currentTime;
             lookDirection = "RIGHT";
             LeftArrowBackground.alpha = 0
-        } else if eyeLookOutRight?.decimalValue ?? 0.0 <= 0.5 && eyeLookInLeft?.decimalValue ?? 0.0 <= 0.5 && eyeLookOutLeft?.decimalValue ?? 0.0 <= 0.5 && eyeLookInRight?.decimalValue ?? 0.0 <= 0.5{
+        } else if eyeLookOutRight <= settingsVals.leftRightCutoff && eyeLookInLeft <= settingsVals.leftRightCutoff && eyeLookOutLeft <= settingsVals.leftRightCutoff && eyeLookInRight <= settingsVals.leftRightCutoff{
             startLookTime = Double.greatestFiniteMagnitude;
             lookDirection = "";
             LeftArrowBackground.alpha = 0
             RightArrowBackground.alpha = 0
         }
         
-        if startLookTime + leftRightLookDelay < currentTime {
+        if startLookTime + settingsVals.leftRightLookDelay < currentTime {
             
             if lookDirection == "LEFT" {
 
@@ -309,7 +431,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
                 }else{
                     let imageSplitSize = self.leftImages.count/2;
-                    let animationDuration = leftRightLookDelay/2
+                    let animationDuration = settingsVals.leftRightLookDelay/2
                     self.TopStack.bringSubviewToFront(self.LeftIconsView)
                     UIView.animate(withDuration: animationDuration, animations: {() -> Void in
                         for i in 0 ..< self.rightImages.count {
@@ -368,7 +490,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     }
                 }else{
                     let imageSplitSize = self.rightImages.count/2;
-                    let animationDuration = leftRightLookDelay/2
+                    let animationDuration = settingsVals.leftRightLookDelay/2
                     self.TopStack.bringSubviewToFront(self.RightIconsView)
                     UIView.animate(withDuration: animationDuration, animations: {() -> Void in
                         for i in 0 ..< self.leftImages.count {
@@ -412,12 +534,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
             lookDirection = "RESET";
         }else{
-            if lookDirection == "LEFT" && timeactivateleftright < currentTime - startLookTime {
-                let timestampdiff = (currentTime - startLookTime - timeactivateleftright) / (leftRightLookDelay - timeactivateleftright);
+            if lookDirection == "LEFT" && settingsVals.timeactivateleftright < currentTime - startLookTime {
+                let timestampdiff = (currentTime - startLookTime - settingsVals.timeactivateleftright) / (settingsVals.leftRightLookDelay - settingsVals.timeactivateleftright);
                 LeftArrowBackground.alpha = timestampdiff
                 //leftarrowelement.style.backgroundColor = backgroundColorChange(timestampdiff);
-            } else if lookDirection == "RIGHT" && timeactivateleftright < currentTime - startLookTime {
-                let timestampdiff = (currentTime - startLookTime - timeactivateleftright) / (leftRightLookDelay - timeactivateleftright);
+            } else if lookDirection == "RIGHT" && settingsVals.timeactivateleftright < currentTime - startLookTime {
+                let timestampdiff = (currentTime - startLookTime - settingsVals.timeactivateleftright) / (settingsVals.leftRightLookDelay - settingsVals.timeactivateleftright);
                 RightArrowBackground.alpha = timestampdiff
                 //rightarrowelement.style.backgroundColor = backgroundColorChange(timestampdiff);
             }

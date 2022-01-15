@@ -17,8 +17,11 @@ class howToViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepare ran")
+    @IBAction func doneButton(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "unwindToHowTo", sender: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -23,7 +23,7 @@ extension Array {
 }
 
 
-class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDelegate, CBPeripheralDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let DEVICE_NAME = "ESP32_Bluetooth";
     let SEND_SERVICE = CBUUID(string:"6e400001-b5a3-f393-e0a9-e50e24dcca9e");
     let SEND_SERVICE_CHARACTERISTIC = CBUUID(string:"6e400002-b5a3-f393-e0a9-e50e24dcca9e");
@@ -53,8 +53,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         
     }
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print(peripheral.services)
-        print(peripheral.name)
+        print(peripheral.services ?? "")
+        print(peripheral.name ?? "")
         if peripheral.name ?? "" == "ESP32_Bluetooth" {
             esp32Peripheral = peripheral;
             esp32Peripheral.delegate = self
@@ -294,12 +294,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         sceneView.delegate = self
 
         iconImageViews =
-        [(name: "1-Afraid", imageView:Icon1),(name: "2-Pain", imageView:Icon2),(name: "3-Yes", imageView:Icon3),(name: "4-No", imageView:Icon4),(name: "5-Sad", imageView:Icon5),(name: "6-Frustrated", imageView:Icon6),(name: "7-Nurse", imageView:Icon7),(name: "8-Doctor", imageView:Icon8),(name: "9-Tired", imageView:Icon9),(name: "10-FeelSick", imageView:Icon10),(name: "11-Cold_hot", imageView:Icon11),(name: "12-ShortofBreath", imageView:Icon12),(name: "13-Angry", imageView:Icon13),(name: "14-Dizzy", imageView:Icon14),(name: "15-Choking", imageView:Icon15),(name: "16-Hungry", imageView:Icon16),(name: "17-HowamI", imageView:Icon17),(name: "18-WhatTime", imageView:Icon18),(name: "19-WhatsHappening", imageView:Icon19),(name: "20-Comeback", imageView:Icon20),(name: "21-Situp", imageView:Icon21),(name: "22-LieDown", imageView:Icon22),(name: "23-Home", imageView:Icon23),(name: "24-TVVideo", imageView:Icon24),(name: "25-Light", imageView:Icon25),(name: "26-CallLight", imageView:Icon26),(name: "27-Water", imageView:Icon27),(name: "28-Glasses", imageView:Icon28),(name: "29-Suction", imageView:Icon29),(name: "30-LipsMoistened", imageView:Icon30),(name: "31-Sleep", imageView:Icon31),(name: "32-SoundOff", imageView:Icon32)]
+        [(name: "1-Afraid", imageView: Icon1),(name: "2-Pain", imageView:Icon2),(name: "3-Yes", imageView:Icon3),(name: "4-No", imageView:Icon4),(name: "5-Sad", imageView:Icon5),(name: "6-Frustrated", imageView:Icon6),(name: "7-Nurse", imageView:Icon7),(name: "8-Doctor", imageView:Icon8),(name: "9-Tired", imageView:Icon9),(name: "10-FeelSick", imageView:Icon10),(name: "11-Cold_hot", imageView:Icon11),(name: "12-ShortofBreath", imageView:Icon12),(name: "13-Angry", imageView:Icon13),(name: "14-Dizzy", imageView:Icon14),(name: "15-Choking", imageView:Icon15),(name: "16-Hungry", imageView:Icon16),(name: "17-HowamI", imageView:Icon17),(name: "18-WhatTime", imageView:Icon18),(name: "19-WhatsHappening", imageView:Icon19),(name: "20-Comeback", imageView:Icon20),(name: "21-Situp", imageView:Icon21),(name: "22-LieDown", imageView:Icon22),(name: "23-Home", imageView:Icon23),(name: "24-TVVideo", imageView:Icon24),(name: "25-Light", imageView:Icon25),(name: "26-CallLight", imageView:Icon26),(name: "27-Water", imageView:Icon27),(name: "28-Glasses", imageView:Icon28),(name: "29-Suction", imageView:Icon29),(name: "30-LipsMoistened", imageView:Icon30),(name: "31-Sleep", imageView:Icon31),(name: "32-SoundOff", imageView:Icon32)]
 
         
         let tempIconImagesGlobal = iconImageViews.split();
@@ -307,9 +307,47 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         rightImagesGlobal = tempIconImagesGlobal.right;
         leftImages = leftImagesGlobal;
         rightImages = rightImagesGlobal;
+        
+        for i in 0 ..< iconImageViews.count{
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTapView(_:)))
+            iconImageViews[i].1.addGestureRecognizer(tap)
+            iconImageViews[i].1.accessibilityIdentifier = iconImageViews[i].0
+        }
+        
+
 
     }
+    var imagetochange:UIImageView = UIImageView();
+    @objc func didTapView(_ sender: UITapGestureRecognizer) {
+        //print("did tap view", sender)
+        imagetochange = sender.view as! UIImageView
+        print(imagetochange.accessibilityIdentifier)
+        //imageviewTapped.image = UIImage(named: "2-Pain")
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let checkstring = imagetochange.accessibilityIdentifier
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imagetochange.image = pickedImage
+            for i in 0..<iconImages.count{
+                if iconImages[i].name == checkstring ?? ""{
+                    iconImages[i].image = pickedImage
+                }
+            }
+        }
+        
+
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let configuration = ARFaceTrackingConfiguration()

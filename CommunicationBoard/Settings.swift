@@ -16,4 +16,6 @@ struct Settings{
     var timeactivateleftright = 0.15;
     var timeactivateblink = 0.36;
     var soundOn=false;
+    var voicelanguage = "en-GB"
+    var voiceperson = "Martha"
 }

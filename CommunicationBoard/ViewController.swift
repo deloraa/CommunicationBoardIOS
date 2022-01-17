@@ -295,7 +295,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+
         sceneView.delegate = self
 
         iconImageViews =
@@ -321,7 +321,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     @objc func didTapView(_ sender: UITapGestureRecognizer) {
         //print("did tap view", sender)
         imagetochange = sender.view as! UIImageView
-        print(imagetochange.accessibilityIdentifier)
         //imageviewTapped.image = UIImage(named: "2-Pain")
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -364,15 +363,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         sceneView.session.pause()
     }
     
-    func readSound(readme:String, person:String){
+    func readSound(readme:String){
         //try to use arthur and martha they sound best
-        var voiceToUse = AVSpeechSynthesisVoice(language:"en-US")
+        print(settingsVals.voicelanguage)
+        print(settingsVals.voiceperson)
+        var voiceToUse = AVSpeechSynthesisVoice(language:settingsVals.voicelanguage)
         for voice in AVSpeechSynthesisVoice.speechVoices() {
-            if #available(iOS 9.0, *) {
-                if voice.name == person {
+                if voice.name == settingsVals.voiceperson {
                     voiceToUse = voice
                 }
-            }
         }
         let utterance = AVSpeechUtterance(string: readme)
         utterance.voice = voiceToUse
@@ -601,7 +600,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.modalImage.image = self.leftImages[0].imageView.image
                     self.modalImage.layoutIfNeeded()
                     if settingsVals.soundOn{
-                        readSound(readme:self.imageToSoundString[self.leftImages[0].name] ?? "" , person:"Martha")
+                        readSound(readme:self.imageToSoundString[self.leftImages[0].name] ?? "")
                     }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -696,7 +695,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.modalImage.layoutIfNeeded()
                     //if self.rightImages[0].name
                     if settingsVals.soundOn{
-                        readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "", person:"Martha")
+                        readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "")
                     }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

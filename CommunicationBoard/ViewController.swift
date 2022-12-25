@@ -10,7 +10,7 @@ import SceneKit
 import ARKit
 import AVFoundation
 import CoreBluetooth
-
+import CoreData
 
 extension Array {
     func split() -> (left: [Element], right: [Element]) {
@@ -218,6 +218,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
             iconImages[31].image = UIImage(named: "32-SoundOff")
             iconImages[31].name = "32-SoundOff"
         }
+        
+        
+        if settingsVals.resetImages == true{
+            for i in 0 ..< iconImages.count{
+                iconImages[i].image = UIImage(named: iconImages[i].name)
+            }
+            settingsVals.resetImages = false;
+            resetImages()
+            isInitialScreen = true
+            
+            let DelAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "ImageEntity"))
+            do {
+                try context?.execute(DelAllReqVar)
+            }
+            catch {
+                print(error)
+            }
+        }
     }
     
     @IBAction func unwindToAbout(_ unwindSegue: UIStoryboardSegue) {
@@ -227,9 +245,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     }
     
     var iconImageViews = [(String,UIImageView)]()
-    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Frustrated":"I am frustrated","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Tired":"I am tired","10-FeelSick":"I feel sick","11-Cold_hot":"I am cold or hot","12-ShortofBreath":"I am short of breath","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Choking":"I am choking","16-Hungry":"I am hungry or thirsty","17-HowamI":"How am I doing","18-WhatTime":"What time is it","19-WhatsHappening":"What is happening","20-Comeback":"Come back later","21-Situp":"I would like to situp","22-LieDown":"I would like to lie down","23-Home":"I would like to go home","24-TVVideo":"Turn tv on or off","25-Light":"Turn light on or off","26-CallLight":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses or socks","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOn":"Turn sound on"]
+    var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Tired":"I am tired","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Sick":"I am sick","10-Frustrated":"I am frustrated","11-ShortofBreath":"I am short of breath","12-Choking":"I am choking","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Hot":"I am hot","16-Cold":"I am cold","17-HowamI":"How am I doing","18-WhatsHappening":"What is happening","19-WhatTime":"What time is it","20-ComeBack":"Come back later","21-BedUp":"I would like to situp","22-BedDown":"I would like to lie down","23-Home":"I would like to go home","24-TV_Video":"Turn tv on or off","25-Light":"Turn light on or off","26-Alarm":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOn":"Turn sound on"]
 
-    var iconImages = [(name: "1-Afraid", image:UIImage(named: "1-Afraid")),(name: "2-Pain", image:UIImage(named: "2-Pain")),(name: "3-Yes", image:UIImage(named: "3-Yes")),(name: "4-No", image:UIImage(named: "4-No")),(name: "5-Sad", image:UIImage(named: "5-Sad")),(name: "6-Frustrated", image:UIImage(named: "6-Frustrated")),(name: "7-Nurse", image:UIImage(named: "7-Nurse")),(name: "8-Doctor", image:UIImage(named: "8-Doctor")),(name: "9-Tired", image:UIImage(named: "9-Tired")),(name: "10-FeelSick", image:UIImage(named: "10-FeelSick")),(name: "11-Cold_hot", image:UIImage(named: "11-Cold_hot")),(name: "12-ShortofBreath", image:UIImage(named: "12-ShortofBreath")),(name: "13-Angry", image:UIImage(named: "13-Angry")),(name: "14-Dizzy", image:UIImage(named: "14-Dizzy")),(name: "15-Choking", image:UIImage(named: "15-Choking")),(name: "16-Hungry", image:UIImage(named: "16-Hungry")),(name: "17-HowamI", image:UIImage(named: "17-HowamI")),(name: "18-WhatTime", image:UIImage(named: "18-WhatTime")),(name: "19-WhatsHappening", image:UIImage(named: "19-WhatsHappening")),(name: "20-Comeback", image:UIImage(named: "20-Comeback")),(name: "21-Situp", image:UIImage(named: "21-Situp")),(name: "22-LieDown", image:UIImage(named: "22-LieDown")),(name: "23-Home", image:UIImage(named: "23-Home")),(name: "24-TVVideo", image:UIImage(named: "24-TVVideo")),(name: "25-Light", image:UIImage(named: "25-Light")),(name: "26-CallLight", image:UIImage(named: "26-CallLight")),(name: "27-Water", image:UIImage(named: "27-Water")),(name: "28-Glasses", image:UIImage(named: "28-Glasses")),(name: "29-Suction", image:UIImage(named: "29-Suction")),(name: "30-LipsMoistened", image:UIImage(named: "30-LipsMoistened")),(name: "31-Sleep", image:UIImage(named: "31-Sleep")),(name: "32-SoundOff", image:UIImage(named: "32-SoundOff"))]
+    var iconImages = [(name: "1-Afraid", image:UIImage(named: "1-Afraid")),(name: "2-Pain", image:UIImage(named: "2-Pain")),(name: "3-Yes", image:UIImage(named: "3-Yes")),(name: "4-No", image:UIImage(named: "4-No")),(name: "5-Sad", image:UIImage(named: "5-Sad")),(name: "6-Tired", image:UIImage(named: "6-Tired")),(name: "7-Nurse", image:UIImage(named: "7-Nurse")),(name: "8-Doctor", image:UIImage(named: "8-Doctor")),(name: "9-Sick", image:UIImage(named: "9-Sick")),(name: "10-Frustrated", image:UIImage(named: "10-Frustrated")),(name: "11-ShortofBreath", image:UIImage(named: "11-ShortofBreath")),(name: "12-Choking", image:UIImage(named: "12-Choking")),(name: "13-Angry", image:UIImage(named: "13-Angry")),(name: "14-Dizzy", image:UIImage(named: "14-Dizzy")),(name: "15-Hot", image:UIImage(named: "15-Hot")),(name: "16-Cold", image:UIImage(named: "16-Cold")),(name: "17-HowamI", image:UIImage(named: "17-HowamI")),(name: "18-WhatsHappening", image:UIImage(named: "18-WhatsHappening")),(name: "19-WhatTime", image:UIImage(named: "19-WhatTime")),(name: "20-ComeBack", image:UIImage(named: "20-ComeBack")),(name: "21-BedUp", image:UIImage(named: "21-BedUp")),(name: "22-BedDown", image:UIImage(named: "22-BedDown")),(name: "23-Home", image:UIImage(named: "23-Home")),(name: "24-TV_Video", image:UIImage(named: "24-TV_Video")),(name: "25-Light", image:UIImage(named: "25-Light")),(name: "26-Alarm", image:UIImage(named: "26-Alarm")),(name: "27-Water", image:UIImage(named: "27-Water")),(name: "28-Glasses", image:UIImage(named: "28-Glasses")),(name: "29-Suction", image:UIImage(named: "29-Suction")),(name: "30-LipsMoistened", image:UIImage(named: "30-LipsMoistened")),(name: "31-Sleep", image:UIImage(named: "31-Sleep")),(name: "32-SoundOff", image:UIImage(named: "32-SoundOff"))]
     
     var leftImagesGlobal = [(name:String,imageView:UIImageView)]();
     var rightImagesGlobal = [(name:String,imageView:UIImageView)]();
@@ -251,7 +269,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     }
 
     func resetImages(){
-        
+        self.isInitialScreen = true;
         for i in 0 ..< leftImagesGlobal.count {
             leftImagesGlobal[i].imageView.image = iconImages[i].image;
             leftImagesGlobal[i].name = iconImages[i].name;
@@ -291,7 +309,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var context: NSManagedObjectContext?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -299,7 +318,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         sceneView.delegate = self
 
         iconImageViews =
-        [(name: "1-Afraid", imageView: Icon1),(name: "2-Pain", imageView:Icon2),(name: "3-Yes", imageView:Icon3),(name: "4-No", imageView:Icon4),(name: "5-Sad", imageView:Icon5),(name: "6-Frustrated", imageView:Icon6),(name: "7-Nurse", imageView:Icon7),(name: "8-Doctor", imageView:Icon8),(name: "9-Tired", imageView:Icon9),(name: "10-FeelSick", imageView:Icon10),(name: "11-Cold_hot", imageView:Icon11),(name: "12-ShortofBreath", imageView:Icon12),(name: "13-Angry", imageView:Icon13),(name: "14-Dizzy", imageView:Icon14),(name: "15-Choking", imageView:Icon15),(name: "16-Hungry", imageView:Icon16),(name: "17-HowamI", imageView:Icon17),(name: "18-WhatTime", imageView:Icon18),(name: "19-WhatsHappening", imageView:Icon19),(name: "20-Comeback", imageView:Icon20),(name: "21-Situp", imageView:Icon21),(name: "22-LieDown", imageView:Icon22),(name: "23-Home", imageView:Icon23),(name: "24-TVVideo", imageView:Icon24),(name: "25-Light", imageView:Icon25),(name: "26-CallLight", imageView:Icon26),(name: "27-Water", imageView:Icon27),(name: "28-Glasses", imageView:Icon28),(name: "29-Suction", imageView:Icon29),(name: "30-LipsMoistened", imageView:Icon30),(name: "31-Sleep", imageView:Icon31),(name: "32-SoundOff", imageView:Icon32)]
+        [(name: "1-Afraid", imageView: Icon1),(name: "2-Pain", imageView:Icon2),(name: "3-Yes", imageView:Icon3),(name: "4-No", imageView:Icon4),(name: "5-Sad", imageView:Icon5),(name: "6-Tired", imageView:Icon6),(name: "7-Nurse", imageView:Icon7),(name: "8-Doctor", imageView:Icon8),(name: "9-Sick", imageView:Icon9),(name: "10-Frustrated", imageView:Icon10),(name: "11-ShortofBreath", imageView:Icon11),(name: "12-Choking", imageView:Icon12),(name: "13-Angry", imageView:Icon13),(name: "14-Dizzy", imageView:Icon14),(name: "15-Hot", imageView:Icon15),(name: "16-Cold", imageView:Icon16),(name: "17-HowamI", imageView:Icon17),(name: "18-WhatsHappening", imageView:Icon18),(name: "19-WhatTime", imageView:Icon19),(name: "20-ComeBack", imageView:Icon20),(name: "21-BedUp", imageView:Icon21),(name: "22-BedDown", imageView:Icon22),(name: "23-Home", imageView:Icon23),(name: "24-TV_Video", imageView:Icon24),(name: "25-Light", imageView:Icon25),(name: "26-Alarm", imageView:Icon26),(name: "27-Water", imageView:Icon27),(name: "28-Glasses", imageView:Icon28),(name: "29-Suction", imageView:Icon29),(name: "30-LipsMoistened", imageView:Icon30),(name: "31-Sleep", imageView:Icon31),(name: "32-SoundOff", imageView:Icon32)]
 
         
         let tempIconImagesGlobal = iconImageViews.split();
@@ -314,18 +333,42 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
             iconImageViews[i].1.accessibilityIdentifier = iconImageViews[i].0
         }
         
+        context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageEntity")
+        fetchRequest.returnsObjectsAsFaults = false
 
+        do {
+            let results = try context?.fetch(fetchRequest)
+            for result in results as! [NSManagedObject] {
+                print(result)
+                let imageName = result.value(forKey:"imageName") as? String
+                for i in 0..<iconImages.count{
+                    if iconImages[i].name == imageName ?? ""{
+                        if let imageData = result.value(forKey:"imageData") as? Data {
+                            iconImages[i].image = UIImage(data: imageData)
 
+                        }else{
+                            print("err image was not updated")
+                        }
+                    }
+                }
+          }
+        } catch let error as NSError {
+          print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        resetImages()
     }
     var imagetochange:UIImageView = UIImageView();
     @objc func didTapView(_ sender: UITapGestureRecognizer) {
-        //print("did tap view", sender)
-        imagetochange = sender.view as! UIImageView
-        //imageviewTapped.image = UIImage(named: "2-Pain")
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
+       
+        if(isInitialScreen == true){
+            imagetochange = sender.view as! UIImageView
+            //imageviewTapped.image = UIImage(named: "2-Pain")
+            let picker = UIImagePickerController()
+            picker.allowsEditing = true
+            picker.delegate = self
+            present(picker, animated: true)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -335,12 +378,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
             for i in 0..<iconImages.count{
                 if iconImages[i].name == checkstring ?? ""{
                     iconImages[i].image = pickedImage
+                    let data = NSEntityDescription.insertNewObject(forEntityName: "ImageEntity", into: context!)
+                    data.setValue(pickedImage.pngData(), forKey: "imageData")
+                    data.setValue(iconImages[i].name, forKey: "imageName")
+                    do {
+                    try context?.save()
+                        print("Data Saved")
+                    } catch {
+                        print("No error")
+                    }
                 }
             }
         }
-        
 
-        
         dismiss(animated: true, completion: nil)
     }
     
@@ -429,6 +479,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     var startLookTime = Double.greatestFiniteMagnitude;
     var blinklookupStartTime = Double.greatestFiniteMagnitude;
     var blinklookupVal="";
+    var isInitialScreen=true;
     func readMyFace(anchor: ARFaceAnchor) {
         if settingsOpen{
             return;
@@ -648,6 +699,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                             let initsize = self.leftImages.count/2;
                             self.rightImages = Array(self.rightImagesGlobal[0 ..< initsize])
                             self.leftImages = Array(self.leftImagesGlobal[0 ..< initsize])
+                            self.isInitialScreen = false;
                         })
                     })
                     
@@ -739,9 +791,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                                 self.rightImages[i+imageSplitSize].imageView.image = UIImage()
                                 self.rightImages[i+imageSplitSize].imageView.transform = CGAffineTransform(translationX:0,y:0)
                             }
+                            
                             let initsize = self.rightImages.count/2;
                             self.leftImages = Array(self.leftImagesGlobal[0 ..< initsize])
                             self.rightImages = Array(self.rightImagesGlobal[0 ..< initsize])
+                            self.isInitialScreen = false;
                         })
                     })
                     

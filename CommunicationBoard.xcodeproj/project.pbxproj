@@ -11,6 +11,7 @@
 		FD060E3E278EB66F000AD6F5 /* aboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD060E3D278EB66F000AD6F5 /* aboutViewController.swift */; };
 		FD060E4227916DEC000AD6F5 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD060E4127916DEC000AD6F5 /* CircularProgressView.swift */; };
 		FD2B1C2E2792415100FD2AC9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2B1C2D2792415100FD2AC9 /* Settings.swift */; };
+		FD4B566029587B22003AB00A /* ImageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD4B565E29587B22003AB00A /* ImageModel.xcdatamodeld */; };
 		FD5E3E52278A3C3400AD4CF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E51278A3C3400AD4CF9 /* AppDelegate.swift */; };
 		FD5E3E54278A3C3400AD4CF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E53278A3C3400AD4CF9 /* SceneDelegate.swift */; };
 		FD5E3E56278A3C3400AD4CF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E3E55278A3C3400AD4CF9 /* ViewController.swift */; };
@@ -46,6 +47,7 @@
 		FD060E3D278EB66F000AD6F5 /* aboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutViewController.swift; sourceTree = "<group>"; };
 		FD060E4127916DEC000AD6F5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		FD2B1C2D2792415100FD2AC9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		FD4B565F29587B22003AB00A /* ImageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageModel.xcdatamodel; sourceTree = "<group>"; };
 		FD5E3E4E278A3C3400AD4CF9 /* CommunicationBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommunicationBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD5E3E51278A3C3400AD4CF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD5E3E53278A3C3400AD4CF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				FD68231A278E8F7C001F695D /* howToViewController.swift */,
 				FD060E3B278EB658000AD6F5 /* settingsViewController.swift */,
 				FD060E3D278EB66F000AD6F5 /* aboutViewController.swift */,
+				FD4B565E29587B22003AB00A /* ImageModel.xcdatamodeld */,
 				FD5E3E57278A3C3400AD4CF9 /* Main.storyboard */,
 				FD5E3E5A278A3C3600AD4CF9 /* Assets.xcassets */,
 				FD5E3E5C278A3C3600AD4CF9 /* LaunchScreen.storyboard */,
@@ -284,6 +287,7 @@
 				FD060E4227916DEC000AD6F5 /* CircularProgressView.swift in Sources */,
 				FD5E3E56278A3C3400AD4CF9 /* ViewController.swift in Sources */,
 				FD5E3E52278A3C3400AD4CF9 /* AppDelegate.swift in Sources */,
+				FD4B566029587B22003AB00A /* ImageModel.xcdatamodeld in Sources */,
 				FD5E3E54278A3C3400AD4CF9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +632,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FD4B565E29587B22003AB00A /* ImageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FD4B565F29587B22003AB00A /* ImageModel.xcdatamodel */,
+			);
+			currentVersion = FD4B565F29587B22003AB00A /* ImageModel.xcdatamodel */;
+			path = ImageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FD5E3E46278A3C3400AD4CF9 /* Project object */;
 }

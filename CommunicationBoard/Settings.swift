@@ -18,4 +18,5 @@ struct Settings{
     var soundOn=false;
     var voicelanguage = "en-GB"
     var voiceperson = "Martha"
+    var resetImages = false
 }

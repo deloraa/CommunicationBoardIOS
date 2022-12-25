@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="landscape" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -145,7 +145,7 @@
                                                                     <constraint firstAttribute="width" secondItem="74E-7K-5he" secondAttribute="height" multiplier="1:1" id="LGn-dN-9jV"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6-Frustrated" translatesAutoresizingMaskIntoConstraints="NO" id="3IG-Fp-sPF">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6-Tired" translatesAutoresizingMaskIntoConstraints="NO" id="3IG-Fp-sPF">
                                                                 <rect key="frame" x="77.666666666666657" y="0.0" width="77.666666666666657" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="3IG-Fp-sPF" secondAttribute="height" multiplier="1:1" id="u9J-Ur-HqR"/>
@@ -168,25 +168,25 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="b6U-F7-pe3">
                                                         <rect key="frame" x="0.0" y="155.33333333333334" width="311" height="77.666666666666657"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9-Tired" translatesAutoresizingMaskIntoConstraints="NO" id="gnj-oT-RES">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9-Sick" translatesAutoresizingMaskIntoConstraints="NO" id="gnj-oT-RES">
                                                                 <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="gnj-oT-RES" secondAttribute="height" multiplier="1:1" id="Hux-ou-bIE"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10-FeelSick" translatesAutoresizingMaskIntoConstraints="NO" id="ui7-VT-205">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="10-Frustrated" translatesAutoresizingMaskIntoConstraints="NO" id="ui7-VT-205">
                                                                 <rect key="frame" x="77.666666666666657" y="0.0" width="77.666666666666657" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="ui7-VT-205" secondAttribute="height" multiplier="1:1" id="i5I-18-705"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11-Cold_hot" translatesAutoresizingMaskIntoConstraints="NO" id="rn3-PV-vJx">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11-ShortofBreath" translatesAutoresizingMaskIntoConstraints="NO" id="rn3-PV-vJx">
                                                                 <rect key="frame" x="155.33333333333331" y="0.0" width="77.666666666666686" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="rn3-PV-vJx" secondAttribute="height" multiplier="1:1" id="E04-4X-mWk"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="12-ShortofBreath" translatesAutoresizingMaskIntoConstraints="NO" id="O2H-GY-5jb">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="12-Choking" translatesAutoresizingMaskIntoConstraints="NO" id="O2H-GY-5jb">
                                                                 <rect key="frame" x="233" y="0.0" width="78" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="O2H-GY-5jb" secondAttribute="height" multiplier="1:1" id="bum-UP-ZK5"/>
@@ -209,13 +209,13 @@
                                                                     <constraint firstAttribute="width" secondItem="uk0-fx-Kth" secondAttribute="height" multiplier="1:1" id="Aoq-ST-i34"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="15-Choking" translatesAutoresizingMaskIntoConstraints="NO" id="kmP-e3-AQr">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="15-Hot" translatesAutoresizingMaskIntoConstraints="NO" id="kmP-e3-AQr">
                                                                 <rect key="frame" x="155.33333333333331" y="0.0" width="77.666666666666686" height="78"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="kmP-e3-AQr" secondAttribute="height" multiplier="1:1" id="nLY-e6-ZA5"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="16-Hungry" translatesAutoresizingMaskIntoConstraints="NO" id="KTW-T7-tRv">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="16-Cold" translatesAutoresizingMaskIntoConstraints="NO" id="KTW-T7-tRv">
                                                                 <rect key="frame" x="233" y="0.0" width="78" height="78"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="KTW-T7-tRv" secondAttribute="height" multiplier="1:1" id="MuO-uW-AlS"/>
@@ -250,19 +250,19 @@
                                                                     <constraint firstAttribute="width" secondItem="Hgn-2J-srd" secondAttribute="height" multiplier="1:1" id="fcv-Vg-JzM"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="18-WhatTime" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-Fn-m86">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="18-WhatsHappening" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-Fn-m86">
                                                                 <rect key="frame" x="77.666666666666629" y="0.0" width="77.666666666666686" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="i0o-Fn-m86" secondAttribute="height" multiplier="1:1" id="j0z-A6-Rv1"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="19-WhatsHappening" translatesAutoresizingMaskIntoConstraints="NO" id="7Ca-ll-5BR">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="19-WhatTime" translatesAutoresizingMaskIntoConstraints="NO" id="7Ca-ll-5BR">
                                                                 <rect key="frame" x="155.33333333333331" y="0.0" width="77.666666666666686" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="7Ca-ll-5BR" secondAttribute="height" multiplier="1:1" id="3VF-D4-6LJ"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20-Comeback" translatesAutoresizingMaskIntoConstraints="NO" id="XwT-0j-DxT">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20-ComeBack" translatesAutoresizingMaskIntoConstraints="NO" id="XwT-0j-DxT">
                                                                 <rect key="frame" x="232.99999999999991" y="0.0" width="77.666666666666657" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="XwT-0j-DxT" secondAttribute="height" multiplier="1:1" id="x3e-OP-SFH"/>
@@ -273,13 +273,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="gsI-AM-4Ru">
                                                         <rect key="frame" x="0.0" y="77.666666666666657" width="310.66666666666669" height="77.666666666666657"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="21-Situp" translatesAutoresizingMaskIntoConstraints="NO" id="aSf-dr-g7u">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="21-BedUp" translatesAutoresizingMaskIntoConstraints="NO" id="aSf-dr-g7u">
                                                                 <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="aSf-dr-g7u" secondAttribute="height" multiplier="1:1" id="BY8-dW-rGH"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="22-LieDown" translatesAutoresizingMaskIntoConstraints="NO" id="Daa-ns-jCA">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="22-BedDown" translatesAutoresizingMaskIntoConstraints="NO" id="Daa-ns-jCA">
                                                                 <rect key="frame" x="77.666666666666629" y="0.0" width="77.666666666666686" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="Daa-ns-jCA" secondAttribute="height" multiplier="1:1" id="gDJ-Jw-2bd"/>
@@ -291,7 +291,7 @@
                                                                     <constraint firstAttribute="width" secondItem="XeZ-MD-3io" secondAttribute="height" multiplier="1:1" id="tMi-6N-w99"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="24-TVVideo" translatesAutoresizingMaskIntoConstraints="NO" id="gcg-eD-Fbp">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="24-TV_Video" translatesAutoresizingMaskIntoConstraints="NO" id="gcg-eD-Fbp">
                                                                 <rect key="frame" x="232.99999999999991" y="0.0" width="77.666666666666657" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="gcg-eD-Fbp" secondAttribute="height" multiplier="1:1" id="b6i-Tp-aLF"/>
@@ -308,7 +308,7 @@
                                                                     <constraint firstAttribute="width" secondItem="0Hf-On-dNy" secondAttribute="height" multiplier="1:1" id="vb1-Xw-Alu"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="26-CallLight" translatesAutoresizingMaskIntoConstraints="NO" id="mIy-FR-aCR">
+                                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="26-Alarm" translatesAutoresizingMaskIntoConstraints="NO" id="mIy-FR-aCR">
                                                                 <rect key="frame" x="77.666666666666629" y="0.0" width="77.666666666666686" height="77.666666666666671"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="mIy-FR-aCR" secondAttribute="height" multiplier="1:1" id="8Yx-w3-awR"/>
@@ -698,9 +698,18 @@
                                                     <action selector="soundButton:" destination="hiT-eo-yOS" eventType="touchUpInside" id="nuD-g9-LiH"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRR-k3-QXB">
+                                                <rect key="frame" x="115" y="225" width="111" height="31"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Reset Images"/>
+                                                <connections>
+                                                    <action selector="resetImagesButton:" destination="hiT-eo-yOS" eventType="touchUpInside" id="3bE-T3-dCf"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="VRR-k3-QXB" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="0Kr-zg-57U"/>
                                             <constraint firstItem="QRX-zk-ptx" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="BHs-Bm-fmL"/>
                                             <constraint firstAttribute="trailing" secondItem="mp8-Gg-Xej" secondAttribute="trailing" constant="10" id="Dzl-MM-SNL"/>
                                             <constraint firstItem="QRX-zk-ptx" firstAttribute="top" secondItem="Mkx-Fw-hDW" secondAttribute="bottom" constant="5" id="Hqw-sk-1aY"/>
@@ -712,6 +721,7 @@
                                             <constraint firstAttribute="trailing" secondItem="JDW-Sc-jfo" secondAttribute="trailing" constant="10" id="XKX-nQ-TcJ"/>
                                             <constraint firstItem="mp8-Gg-Xej" firstAttribute="top" secondItem="7EM-H6-YMy" secondAttribute="bottom" constant="5" id="azM-jC-fYs"/>
                                             <constraint firstItem="Mkx-Fw-hDW" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="b0X-wG-hTH"/>
+                                            <constraint firstItem="VRR-k3-QXB" firstAttribute="top" secondItem="QRX-zk-ptx" secondAttribute="bottom" constant="8" id="cPu-GC-G2t"/>
                                             <constraint firstItem="JDW-Sc-jfo" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="d9r-Si-MwF"/>
                                             <constraint firstItem="dUH-zp-dqH" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="koh-cO-uwC"/>
                                             <constraint firstItem="7EM-H6-YMy" firstAttribute="centerX" secondItem="MdN-gg-C9r" secondAttribute="centerX" id="lao-Bb-rpO"/>
@@ -912,38 +922,38 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1-Afraid" width="547" height="547"/>
-        <image name="10-FeelSick" width="547" height="547"/>
-        <image name="11-Cold_hot" width="547" height="547"/>
-        <image name="12-ShortofBreath" width="547" height="547"/>
-        <image name="13-Angry" width="547" height="547"/>
-        <image name="14-Dizzy" width="547" height="547"/>
-        <image name="15-Choking" width="547" height="547"/>
-        <image name="16-Hungry" width="547" height="547"/>
-        <image name="17-HowamI" width="1084" height="1084"/>
-        <image name="18-WhatTime" width="1085" height="1084"/>
-        <image name="19-WhatsHappening" width="1085" height="1084"/>
-        <image name="2-Pain" width="547" height="547"/>
-        <image name="20-Comeback" width="1085" height="1084"/>
-        <image name="21-Situp" width="547" height="547"/>
-        <image name="22-LieDown" width="547" height="547"/>
-        <image name="23-Home" width="547" height="547"/>
-        <image name="24-TVVideo" width="547" height="547"/>
-        <image name="25-Light" width="547" height="547"/>
-        <image name="26-CallLight" width="547" height="547"/>
-        <image name="27-Water" width="780" height="780"/>
-        <image name="28-Glasses" width="1085" height="1085"/>
-        <image name="29-Suction" width="547" height="547"/>
-        <image name="3-Yes" width="543" height="542"/>
-        <image name="30-LipsMoistened" width="547" height="547"/>
-        <image name="31-Sleep" width="547" height="547"/>
+        <image name="1-Afraid" width="548" height="547"/>
+        <image name="10-Frustrated" width="548" height="547"/>
+        <image name="11-ShortofBreath" width="548" height="547"/>
+        <image name="12-Choking" width="548" height="547"/>
+        <image name="13-Angry" width="548" height="547"/>
+        <image name="14-Dizzy" width="548" height="547"/>
+        <image name="15-Hot" width="548" height="547"/>
+        <image name="16-Cold" width="548" height="547"/>
+        <image name="17-HowamI" width="548" height="547"/>
+        <image name="18-WhatsHappening" width="548" height="547"/>
+        <image name="19-WhatTime" width="548" height="547"/>
+        <image name="2-Pain" width="548" height="547"/>
+        <image name="20-ComeBack" width="548" height="547"/>
+        <image name="21-BedUp" width="548" height="547"/>
+        <image name="22-BedDown" width="548" height="547"/>
+        <image name="23-Home" width="548" height="547"/>
+        <image name="24-TV_Video" width="548" height="547"/>
+        <image name="25-Light" width="548" height="547"/>
+        <image name="26-Alarm" width="548" height="547"/>
+        <image name="27-Water" width="548" height="547"/>
+        <image name="28-Glasses" width="548" height="547"/>
+        <image name="29-Suction" width="548" height="547"/>
+        <image name="3-Yes" width="548" height="547"/>
+        <image name="30-LipsMoistened" width="548" height="547"/>
+        <image name="31-Sleep" width="548" height="547"/>
         <image name="32-SoundOff" width="1085" height="1084"/>
-        <image name="4-No" width="542" height="542"/>
-        <image name="5-Sad" width="547" height="547"/>
-        <image name="6-Frustrated" width="547" height="547"/>
-        <image name="7-Nurse" width="1085" height="1085"/>
-        <image name="8-Doctor" width="1084" height="1085"/>
-        <image name="9-Tired" width="547" height="547"/>
+        <image name="4-No" width="548" height="547"/>
+        <image name="5-Sad" width="548" height="547"/>
+        <image name="6-Tired" width="548" height="547"/>
+        <image name="7-Nurse" width="548" height="547"/>
+        <image name="8-Doctor" width="548" height="547"/>
+        <image name="9-Sick" width="548" height="547"/>
         <image name="arrow.left.circle" catalog="system" width="128" height="121"/>
         <image name="arrow.right.circle" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">

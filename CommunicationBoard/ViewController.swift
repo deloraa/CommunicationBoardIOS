@@ -221,6 +221,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
         
         
         if settingsVals.resetImages == true{
+            imageToSoundStringCurrentMap = imageToSoundString
             for i in 0 ..< iconImages.count{
                 iconImages[i].image = UIImage(named: iconImages[i].name)
             }
@@ -247,6 +248,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     var iconImageViews = [(String,UIImageView)]()
     var imageToSoundString = ["1-Afraid":"I am afraid","2-Pain":"I am in pain", "3-Yes":"Yes", "4-No":"No","5-Sad":"I am sad","6-Tired":"I am tired","7-Nurse":"I would like a nurse","8-Doctor":"I would like a doctor", "9-Sick":"I am sick","10-Frustrated":"I am frustrated","11-ShortofBreath":"I am short of breath","12-Choking":"I am choking","13-Angry":"I am angry","14-Dizzy":"I am dizzy","15-Hot":"I am hot","16-Cold":"I am cold","17-HowamI":"How am I doing","18-WhatsHappening":"What is happening","19-WhatTime":"What time is it","20-ComeBack":"Come back later","21-BedUp":"I would like to situp","22-BedDown":"I would like to lie down","23-Home":"I would like to go home","24-TV_Video":"Turn tv on or off","25-Light":"Turn light on or off","26-Alarm":"Activate call light","27-Water":"I want water","28-Glasses":"I need glasses","29-Suction":"I would like to be suctioned", "30-LipsMoistened":"I would like my lips moistenend","31-Sleep":"I want to sleep","32-SoundOn":"Turn sound on"]
 
+    var imageToSoundStringCurrentMap:[String:String] = [:]
     var iconImages = [(name: "1-Afraid", image:UIImage(named: "1-Afraid")),(name: "2-Pain", image:UIImage(named: "2-Pain")),(name: "3-Yes", image:UIImage(named: "3-Yes")),(name: "4-No", image:UIImage(named: "4-No")),(name: "5-Sad", image:UIImage(named: "5-Sad")),(name: "6-Tired", image:UIImage(named: "6-Tired")),(name: "7-Nurse", image:UIImage(named: "7-Nurse")),(name: "8-Doctor", image:UIImage(named: "8-Doctor")),(name: "9-Sick", image:UIImage(named: "9-Sick")),(name: "10-Frustrated", image:UIImage(named: "10-Frustrated")),(name: "11-ShortofBreath", image:UIImage(named: "11-ShortofBreath")),(name: "12-Choking", image:UIImage(named: "12-Choking")),(name: "13-Angry", image:UIImage(named: "13-Angry")),(name: "14-Dizzy", image:UIImage(named: "14-Dizzy")),(name: "15-Hot", image:UIImage(named: "15-Hot")),(name: "16-Cold", image:UIImage(named: "16-Cold")),(name: "17-HowamI", image:UIImage(named: "17-HowamI")),(name: "18-WhatsHappening", image:UIImage(named: "18-WhatsHappening")),(name: "19-WhatTime", image:UIImage(named: "19-WhatTime")),(name: "20-ComeBack", image:UIImage(named: "20-ComeBack")),(name: "21-BedUp", image:UIImage(named: "21-BedUp")),(name: "22-BedDown", image:UIImage(named: "22-BedDown")),(name: "23-Home", image:UIImage(named: "23-Home")),(name: "24-TV_Video", image:UIImage(named: "24-TV_Video")),(name: "25-Light", image:UIImage(named: "25-Light")),(name: "26-Alarm", image:UIImage(named: "26-Alarm")),(name: "27-Water", image:UIImage(named: "27-Water")),(name: "28-Glasses", image:UIImage(named: "28-Glasses")),(name: "29-Suction", image:UIImage(named: "29-Suction")),(name: "30-LipsMoistened", image:UIImage(named: "30-LipsMoistened")),(name: "31-Sleep", image:UIImage(named: "31-Sleep")),(name: "32-SoundOff", image:UIImage(named: "32-SoundOff"))]
     
     var leftImagesGlobal = [(name:String,imageView:UIImageView)]();
@@ -314,7 +316,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        UIApplication.shared.isIdleTimerDisabled = true
         sceneView.delegate = self
 
         iconImageViews =
@@ -332,7 +334,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
             iconImageViews[i].1.addGestureRecognizer(tap)
             iconImageViews[i].1.accessibilityIdentifier = iconImageViews[i].0
         }
-        
+        imageToSoundStringCurrentMap = imageToSoundString
         context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ImageEntity")
         fetchRequest.returnsObjectsAsFaults = false
@@ -346,7 +348,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     if iconImages[i].name == imageName ?? ""{
                         if let imageData = result.value(forKey:"imageData") as? Data {
                             iconImages[i].image = UIImage(data: imageData)
-
+                            imageToSoundStringCurrentMap[iconImages[i].name] = ""
                         }else{
                             print("err image was not updated")
                         }
@@ -381,6 +383,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     let data = NSEntityDescription.insertNewObject(forEntityName: "ImageEntity", into: context!)
                     data.setValue(pickedImage.pngData(), forKey: "imageData")
                     data.setValue(iconImages[i].name, forKey: "imageName")
+                    imageToSoundStringCurrentMap[iconImages[i].name] = ""
                     do {
                     try context?.save()
                         print("Data Saved")
@@ -651,7 +654,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.modalImage.image = self.leftImages[0].imageView.image
                     self.modalImage.layoutIfNeeded()
                     if settingsVals.soundOn{
-                        readSound(readme:self.imageToSoundString[self.leftImages[0].name] ?? "")
+                        readSound(readme:self.imageToSoundStringCurrentMap[self.leftImages[0].name] ?? "")
                     }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -747,7 +750,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, CBCentralManagerDeleg
                     self.modalImage.layoutIfNeeded()
                     //if self.rightImages[0].name
                     if settingsVals.soundOn{
-                        readSound(readme:self.imageToSoundString[self.rightImages[0].name] ?? "")
+                        readSound(readme:self.imageToSoundStringCurrentMap[self.rightImages[0].name] ?? "")
                     }
                     resetImages()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

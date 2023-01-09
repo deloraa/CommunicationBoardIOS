@@ -34,7 +34,7 @@ class settingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var blinkSensitivityOutlet: UISlider!
     @IBOutlet weak var blinkDelayOutlet: UISlider!
     @IBOutlet weak var soundButtonOutlet: UIButton!
- 
+
     
     var languageToTuple : [String:(Language:String,Name:String)] = [:]
     
@@ -146,6 +146,16 @@ class settingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @IBAction func resetImagesButton(_ sender: UIButton) {
-        settingsVals.resetImages = true
+        
+        if settingsVals.resetImages{
+            settingsVals.resetImages = false
+            sender.setTitle("Do Not Reset Images", for: .normal)
+            sender.setTitleColor(.systemBlue, for: .normal)
+        }else{
+            settingsVals.resetImages = true
+            sender.setTitle("Reset Images", for: .normal)
+            //sender.titleLabel?.textColor=UIColor.red
+            sender.setTitleColor(.systemRed, for: .normal)
+        }
     }
 }
